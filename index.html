@@ -3,126 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradeOS • CEO Dashboard</title>
+    <title>TradeOS • CEO Command</title>
     <style>
-        :root {
-            --bg:#07090d;--surface:#10151d;--surface2:#151b24;--border:rgba(255,255,255,0.06);
-            --text:#fff;--text2:#9aa6b2;--blue:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--purple:#8b5cf6;--cyan:#06b6d4;
-            --radius:20px;--gap:20px;--pad:24px;
-        }
+        :root{--bg:#080c12;--surface:#0f1419;--surface2:#161c24;--border:rgba(255,255,255,0.06);--text:#e6edf3;--text2:#8b949e;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--amber:#d2991d;--purple:#a371f7;--radius:16px;--gap:16px;}
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:var(--bg);color:var(--text);font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:var(--pad);-webkit-font-smoothing:antialiased;}
-        .container{max-width:1200px;margin:0 auto;}
-        header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;flex-wrap:wrap;gap:16px;}
-        .greeting .hello{font-size:0.85rem;color:var(--text2);font-weight:500;}.greeting h1{font-size:2rem;font-weight:700;margin-top:4px;letter-spacing:-0.5px;}
-        .header-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-        .header-actions .btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:12px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.2s;}.header-actions .btn:hover{background:var(--surface);}
-        .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--gap);margin-bottom:32px;}
-        .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden;transition:0.3s;}.kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.4);}
-        .kpi-card .kpi-icon{font-size:1.2rem;margin-bottom:12px;}.kpi-card .kpi-label{font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}.kpi-card .kpi-value{font-size:1.8rem;font-weight:700;letter-spacing:-0.5px;}.kpi-card .kpi-trend{font-size:0.8rem;margin-top:6px;font-weight:600;}
-        .main-grid{display:grid;grid-template-columns:2fr 1fr;gap:var(--gap);margin-bottom:32px;}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;}.card h3{font-size:1rem;font-weight:600;margin-bottom:16px;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}
-        .net-worth-center{text-align:center;padding:20px 0;}.net-worth-center .nw-value{font-size:2.5rem;font-weight:700;letter-spacing:-1px;}.net-worth-center .nw-label{font-size:0.8rem;color:var(--text2);margin-top:4px;}.net-worth-center .nw-trend{font-size:0.85rem;font-weight:600;margin-top:4px;}
-        .asset-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:16px 0;}.asset-bar .assets{background:var(--green);}.asset-bar .liabilities{background:var(--red);}
-        .metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.85rem;}.metric-row:last-child{border-bottom:none;}.metric-row .mr-label{color:var(--text2);}.metric-row .mr-value{font-weight:600;}
-        .insight-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;}.insight-card .insight-priority{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}.insight-card .insight-text{font-size:0.9rem;line-height:1.5;}.insight-card .insight-action{font-size:0.75rem;color:var(--blue);margin-top:8px;font-weight:600;}
-        .product-card,.customer-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;}.product-card .rank{font-size:0.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}.product-card .name,.customer-card .name{font-size:1rem;font-weight:600;margin:4px 0;}.product-card .profit{font-size:1.2rem;font-weight:700;color:var(--green);}
-        .trend-line{width:100%;height:120px;margin-top:12px;}
-        .bottom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap);margin-bottom:32px;}
-        .big-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;}.big-stat .val{font-size:2rem;font-weight:700;letter-spacing:-0.5px;}.big-stat .lbl{font-size:0.75rem;color:var(--text2);margin-top:6px;}
-        @media(max-width:768px){.main-grid{grid-template-columns:1fr;}.kpi-grid{grid-template-columns:1fr 1fr;}.greeting h1{font-size:1.5rem;}.kpi-card .kpi-value{font-size:1.4rem;}}
-        @media(max-width:480px){.kpi-grid{grid-template-columns:1fr;}.bottom-grid{grid-template-columns:1fr 1fr;}}
+        body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;padding:20px;min-height:100vh;-webkit-font-smoothing:antialiased;max-width:600px;margin:0 auto;}
+        header{padding:16px 0 24px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+        header .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+        header h1{font-size:1.5rem;font-weight:700;letter-spacing:-0.4px;}header h1 span{color:var(--blue);}
+        .import-zone{background:var(--surface2);border:2px dashed var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:20px;cursor:pointer;transition:0.2s;}.import-zone:hover{border-color:var(--blue);}
+        .import-zone .iz-icon{font-size:1.5rem;margin-bottom:6px;}.import-zone .iz-text{font-size:0.85rem;color:var(--text2);}.import-zone .iz-action{color:var(--blue);font-weight:600;font-size:0.8rem;margin-top:4px;}
+        .grade-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:20px;}
+        .grade-circle{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2rem;font-weight:800;border:3px solid var(--border);}
+        .grade-A{color:var(--green);border-color:var(--green);}.grade-B{color:var(--blue);border-color:var(--blue);}.grade-C{color:var(--amber);border-color:var(--amber);}.grade-D{color:var(--red);border-color:var(--red);}
+        .grade-label{font-size:0.8rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}.grade-msg{font-size:0.9rem;margin-top:4px;font-weight:600;}
+        .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-bottom:20px;}
+        .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}.kpi .lbl{font-size:0.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;}
+        .kpi .val{font-size:1.5rem;font-weight:700;letter-spacing:-0.4px;}.kpi .vs{font-size:0.7rem;color:var(--text2);margin-top:4px;}
+        .section{margin-bottom:20px;}.section h3{font-size:0.8rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+        .decision-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;border-left:4px solid var(--border);}
+        .decision-card.buy{border-left-color:var(--green);}.decision-card.watch{border-left-color:var(--amber);}.decision-card.stop{border-left-color:var(--red);}
+        .decision-card .dc-title{font-weight:700;font-size:0.95rem;margin-bottom:4px;}.decision-card .dc-reason{font-size:0.8rem;color:var(--text2);margin-bottom:6px;}.decision-card .dc-action{font-size:0.8rem;font-weight:600;}
+        .stat-list .stat-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:0.85rem;}.stat-list .stat-item:last-child{border-bottom:none;}
+        .stat-item .si-label{color:var(--text2);}.stat-item .si-value{font-weight:600;}
+        .btn{display:block;width:100%;padding:14px;border-radius:12px;border:none;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center;margin-bottom:8px;}.btn-primary{background:var(--blue);color:#fff;}.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+        .last-update{text-align:center;font-size:0.7rem;color:var(--text2);margin-top:16px;}
+        input[type=file]{display:none;}
     </style>
 </head>
 <body>
-<div class="container" id="app">
-    <header>
-        <div class="greeting"><div class="hello" id="greetingText">Good Evening</div><h1>CEO Dashboard</h1></div>
-        <div class="header-actions"><button class="btn" onclick="window.location.reload()">🔄 Refresh</button><button class="btn" onclick="exportData()">📥 Export</button></div>
-    </header>
 
-    <div class="kpi-grid" id="kpiGrid"></div>
+<header>
+    <div class="top-row"><h1><span>Trade</span>OS CEO</h1><span style="font-size:0.7rem;color:var(--text2);" id="lastUpdated">No data</span></div>
+    <p style="font-size:0.8rem;color:var(--text2);">Command center for business decisions</p>
+</header>
 
-    <div class="main-grid">
-        <div class="card"><h3>Net Worth Trend</h3><div class="trend-line" id="trendChart"></div></div>
-        <div class="card"><h3>Balance Sheet</h3><div id="balanceSheet"></div></div>
-    </div>
+<div class="import-zone" onclick="document.getElementById('importFile').click()">
+    <div class="iz-icon">📥</div>
+    <div class="iz-text">Tap to import weekly report from Nigeria</div>
+    <div class="iz-action">Import JSON file →</div>
+</div>
+<input type="file" id="importFile" accept=".json" onchange="importData(event)">
 
-    <div class="main-grid">
-        <div class="card"><h3>📊 Executive Insights</h3><div id="insightsPanel"></div></div>
-        <div>
-            <div class="card" style="margin-bottom:20px;"><h3>🏆 Best Product</h3><div id="bestProduct"></div></div>
-            <div class="card"><h3>👤 Top Customer</h3><div id="topCustomer"></div></div>
-        </div>
-    </div>
-
-    <div class="bottom-grid" id="bottomStats"></div>
+<div id="mainContent" style="display:none;">
+    <div class="grade-card" id="gradeCard"></div>
+    <div class="kpi-row" id="kpiRow"></div>
+    <div class="section"><h3>🧠 Decisions You Should Make This Week</h3><div id="decisionsPanel"></div></div>
+    <div class="section"><h3>📊 Business Snapshot</h3><div class="stat-list" id="snapshot"></div></div>
+    <div class="section"><h3>⚠ What Needs Attention</h3><div id="alertsPanel"></div></div>
+    <button class="btn btn-secondary" onclick="exportData()">📥 Export This Report</button>
 </div>
 
-<script>
-const K='tradeos_final_v3';let app={capital:{cash:0,emergencyFund:0,inventoryValue:0,receivables:0,otherAssets:0,payables:0,liabilities:0},capitalHistory:[],decisions:[],inventory:[],deals:[],expenses:[],reviews:[]};
-function load(){const r=localStorage.getItem(K);if(r){try{const p=JSON.parse(r);app={...app,...p};if(!app.capital.otherAssets)app.capital.otherAssets=0;if(!app.capital.liabilities)app.capital.liabilities=0;if(!app.capitalHistory)app.capitalHistory=[];}catch(e){}}}
-function ta(){const c=app.capital;return c.cash+c.emergencyFund+c.inventoryValue+c.receivables+(c.otherAssets||0);}
-function tl(){const c=app.capital;return c.payables+(c.liabilities||0);}
-function nw(){return ta()-tl();}
-function fm(n){return'₦'+Number(n).toLocaleString();}
-function exportData(){const b=new Blob([JSON.stringify(app)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='tradeos_ceo_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+<div id="emptyState" style="text-align:center;padding:40px 0;">
+    <p style="font-size:3rem;margin-bottom:12px;">📊</p>
+    <p style="color:var(--text2);font-size:0.9rem;">No data yet.</p>
+    <p style="color:var(--text2);font-size:0.8rem;margin-top:4px;">Import the weekly file from Nigeria to see the full business picture and get decision recommendations.</p>
+</div>
 
-function render(){
-    const now=new Date();const tm=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-    const closed=app.deals.filter(d=>d.status==='Closed');const mDeals=closed.filter(d=>d.date&&d.date.startsWith(tm));
-    const mRev=mDeals.reduce((s,d)=>s+(d.profit||0),0);const mExp=app.expenses.filter(e=>e.date&&e.date.startsWith(tm)).reduce((s,e)=>s+e.amount,0);
-    const net=nw();const totalProfit=closed.reduce((s,d)=>s+(d.profit||0),0);
+<div class="last-update">TradeOS CEO • Built for business owners managing from abroad</div>
+
+<script>
+const K='tradeos_final_v3';let app=null;
+function fm(n){return'₦'+Number(n).toLocaleString();}
+
+function importData(e){
+    const f=e.target.files[0];if(!f)return;const r=new FileReader();
+    r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.capital&&d.decisions){app=d;renderAll();}else{alert('Invalid file. Please use the file exported from TradeOS.');}}catch(x){alert('Invalid file.');}};
+    r.readAsText(f);e.target.value='';
+}
+
+function renderAll(){
+    if(!app){return;}
+    document.getElementById('emptyState').style.display='none';
+    document.getElementById('mainContent').style.display='block';
+    document.getElementById('lastUpdated').textContent='Data: '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+
+    const c=app.capital;const now=new Date();const tm=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+    const closed=(app.deals||[]).filter(d=>d.status==='Closed');const mDeals=closed.filter(d=>d.date&&d.date.startsWith(tm));
+    const mRev=mDeals.reduce((s,d)=>s+(d.profit||0),0);const mExp=(app.expenses||[]).filter(e=>e.date&&e.date.startsWith(tm)).reduce((s,e)=>s+e.amount,0);
+    const mNet=mRev-mExp;const totalProfit=closed.reduce((s,d)=>s+(d.profit||0),0);
+    const ta=(c.cash||0)+(c.emergencyFund||0)+(c.inventoryValue||0)+(c.receivables||0)+(c.otherAssets||0);
+    const tl=(c.payables||0)+(c.liabilities||0);const net=ta-tl;
     const prods={};closed.forEach(d=>{const k=d.product||'Other';prods[k]=(prods[k]||0)+(d.profit||0);});
     const bestP=Object.entries(prods).sort((a,b)=>b[1]-a[1])[0];
-    const custs={};closed.forEach(d=>{const k=d.customer||'Other';custs[k]=(custs[k]||0)+1;});
-    const bestC=Object.entries(custs).sort((a,b)=>b[1]-a[1])[0];
-    const soldInv=app.inventory.filter(i=>i.status==='Sold');const avgHold=soldInv.length?Math.round(soldInv.reduce((s,i)=>{const pd=new Date(i.purchaseDate||i.date);const sd=new Date(i.date);return s+(sd-pd)/86400000;},0)/soldInv.length):0;
-    const decs=app.decisions.filter(d=>d.status!=='pending');const appr=decs.filter(d=>d.status==='approved').length;const dwr=decs.length?Math.round(appr/decs.length*100):0;
-    const monthlyROI=mExp>0?Math.round((mRev-mExp)/mExp*100):0;const cashRunway=mExp>0&&app.capital.cash>0?Math.round(app.capital.cash/(mExp/30)):0;
-    const hour=new Date().getHours();const greet=hour<12?'Good Morning':hour<17?'Good Afternoon':'Good Evening';document.getElementById('greetingText').textContent=greet;
+    const worstP=Object.entries(prods).sort((a,b)=>a[1]-b[1])[0];
+    const decs=(app.decisions||[]).filter(d=>d.status!=='pending');const appr=decs.filter(d=>d.status==='approved').length;
+    const dwr=decs.length?Math.round(appr/decs.length*100):0;
+    const inv=(app.inventory||[]).filter(i=>i.status==='Active');const soldInv=(app.inventory||[]).filter(i=>i.status==='Sold');
+    const avgHold=soldInv.length?Math.round(soldInv.reduce((s,i)=>{const pd=new Date(i.purchaseDate||i.date);const sd=new Date(i.date);return s+(sd-pd)/86400000;},0)/soldInv.length):0;
+    const cashRunway=mExp>0&&c.cash>0?Math.round(c.cash/(mExp/30)):0;
+    const emergencyPct=net>0?Math.round((c.emergencyFund||0)/net*100):0;
+    const debtRatio=ta>0?Math.round((tl/ta)*100):0;
 
-    // KPI Cards
-    document.getElementById('kpiGrid').innerHTML=[
-        {icon:'💰',label:'Revenue',value:'+'+fm(mRev),trend:'This Month',color:'var(--green)'},
-        {icon:'📉',label:'Expenses',value:'-'+fm(mExp),trend:'This Month',color:'var(--red)'},
-        {icon:'📊',label:'Net Profit',value:(mRev-mExp>=0?'+':'')+fm(mRev-mExp),trend:monthlyROI+'% ROI',color:mRev-mExp>=0?'var(--green)':'var(--red)'},
-        {icon:'🏦',label:'Net Worth',value:fm(net),trend:net>=0?'Positive':'Negative',color:net>=0?'var(--green)':'var(--red)'}
-    ].map(k=>'<div class="kpi-card"><div class="kpi-icon">'+k.icon+'</div><div class="kpi-label">'+k.label+'</div><div class="kpi-value" style="color:'+k.color+'">'+k.value+'</div><div class="kpi-trend" style="color:'+k.color+'">'+k.trend+'</div></div>').join('');
+    // Grade
+    let grade='D',gradeClass='grade-D',gradeMsg='Needs serious attention',gradeColor='var(--red)';
+    if(net>0&&c.emergencyFund>0&&mNet>0&&dwr>=60){grade='A';gradeClass='grade-A';gradeMsg='Healthy business. Keep going.';gradeColor='var(--green)';}
+    else if(net>0&&mNet>0&&dwr>=50){grade='B';gradeClass='grade-B';gradeMsg='Good. A few areas to improve.';gradeColor='var(--blue)';}
+    else if(net>0||mNet>0){grade='C';gradeClass='grade-C';gradeMsg='Surviving. Needs tighter management.';gradeColor='var(--amber)';}
+    document.getElementById('gradeCard').innerHTML='<div class="grade-label">BUSINESS HEALTH GRADE</div><div class="grade-circle '+gradeClass+'">'+grade+'</div><div class="grade-msg">'+gradeMsg+'</div>';
 
-    // Trend Chart
-    const ch=app.capitalHistory||[];
-    if(ch.length>1){const mx=Math.max(...ch.map(h=>h.netWorth),1);const mn=Math.min(...ch.map(h=>h.netWorth),0);let pts='';ch.forEach((h,i)=>{const x=Math.round((i/((ch.length-1)||1))*100);const y=100-Math.round(((h.netWorth-mn)/((mx-mn)||1))*100);pts+=x+','+y+' ';});document.getElementById('trendChart').innerHTML='<svg viewBox="0 0 100 100" style="width:100%;height:100%;"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--green)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--green)" stop-opacity="0"/></linearGradient></defs><polyline points="'+pts.trim()+'" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg>';}else{document.getElementById('trendChart').innerHTML='<p style="color:var(--text2);text-align:center;padding-top:40px;">Log data in TradeOS to see your trend</p>';}
+    // KPIs
+    document.getElementById('kpiRow').innerHTML=[
+        {l:'Monthly Revenue',v:'+'+fm(mRev),c:'var(--green)'},{l:'Monthly Expenses',v:'-'+fm(mExp),c:'var(--red)'},
+        {l:'Net Profit',v:(mNet>=0?'+':'')+fm(mNet),c:mNet>=0?'var(--green)':'var(--red)'},{l:'Net Worth',v:fm(net),c:net>=0?'var(--green)':'var(--red)'}
+    ].map(k=>'<div class="kpi"><div class="lbl">'+k.l+'</div><div class="val" style="color:'+k.c+'">'+k.v+'</div></div>').join('');
 
-    // Balance Sheet
-    const tta=ta();const ttl=tl();const assetPct=tta>0?Math.round((tta/(tta+ttl||1))*100):50;
-    document.getElementById('balanceSheet').innerHTML='<div class="net-worth-center"><div class="nw-value" style="color:'+(net>=0?'var(--green)':'var(--red)')+'">'+fm(net)+'</div><div class="nw-label">Net Worth</div></div><div class="asset-bar"><div class="assets" style="width:'+assetPct+'%;"></div><div class="liabilities" style="width:'+(100-assetPct)+'%;"></div></div><div class="metric-row"><span class="mr-label">Assets</span><span class="mr-value" style="color:var(--green)">'+fm(tta)+'</span></div><div class="metric-row"><span class="mr-label">Liabilities</span><span class="mr-value" style="color:var(--red)">'+fm(ttl)+'</span></div><div class="metric-row"><span class="mr-label">Cash</span><span class="mr-value">'+fm(app.capital.cash)+'</span></div><div class="metric-row"><span class="mr-label">Emergency Fund</span><span class="mr-value">'+fm(app.capital.emergencyFund)+'</span></div><div class="metric-row"><span class="mr-label">Cash Runway</span><span class="mr-value">'+cashRunway+' days</span></div>';
+    // Decisions
+    let decsHTML='';
+    if(bestP&&bestP[1]>0)decsHTML+='<div class="decision-card buy"><div class="dc-title">🟢 BUY MORE: '+bestP[0]+'</div><div class="dc-reason">This is your most profitable product. It generated +'+fm(bestP[1])+' in profit.</div><div class="dc-action" style="color:var(--green);">→ Send funds to restock this item immediately.</div></div>';
+    if(worstP&&worstP[1]<0)decsHTML+='<div class="decision-card stop"><div class="dc-title">🔴 STOP BUYING: '+worstP[0]+'</div><div class="dc-reason">This product is losing money ('+fm(worstP[1])+'). It is dragging the business down.</div><div class="dc-action" style="color:var(--red);">→ Remove from inventory. Sell remaining stock at discount.</div></div>';
+    if(c.emergencyFund<=0)decsHTML+='<div class="decision-card watch"><div class="dc-title">🟡 BUILD EMERGENCY FUND</div><div class="dc-reason">Your business has zero emergency savings. One bad month could shut everything down.</div><div class="dc-action" style="color:var(--amber);">→ Set aside 10% of this month\'s profit as emergency reserve.</div></div>';
+    if(avgHold>14)decsHTML+='<div class="decision-card watch"><div class="dc-title">🟡 INVENTORY MOVING TOO SLOW</div><div class="dc-reason">Products are sitting for '+avgHold+' days on average. Healthy is under 14 days.</div><div class="dc-action" style="color:var(--amber);">→ Run a promotion. Bundle slow items with fast sellers.</div></div>';
+    if(mExp>mRev&&mRev>0)decsHTML+='<div class="decision-card stop"><div class="dc-title">🔴 EXPENSES EXCEED REVENUE</div><div class="dc-reason">You spent '+fm(mExp)+' but only made '+fm(mRev)+' this month.</div><div class="dc-action" style="color:var(--red);">→ Cut one major expense category immediately. Review the Costs breakdown.</div></div>';
+    if(!decsHTML)decsHTML='<p style="color:var(--text2);text-align:center;">Log more data to get decision recommendations.</p>';
+    document.getElementById('decisionsPanel').innerHTML=decsHTML;
 
-    // Insights
-    let insights=[];
-    if(app.capital.emergencyFund<=0)insights.push({p:'🔴 Critical',c:'var(--red)',t:'No emergency fund. You are one unexpected expense away from crisis.',a:'Save ₦5,000 this week.'});
-    if(mExp>mRev&&mRev>0)insights.push({p:'🔴 Warning',c:'var(--red)',t:'Expenses exceeded revenue this month.',a:'Review your Costs tab and cut one category.'});
-    if(avgHold>14)insights.push({p:'🟡 Watch',c:'var(--amber)',t:'Inventory holding time is '+avgHold+' days — above the healthy range.',a:'Consider discounting slow-moving stock.'});
-    if(bestC&&custs[bestC[0]]>=3)insights.push({p:'🔵 Note',c:'var(--cyan)',t:bestC[0]+' is your top customer with '+bestC[1]+' purchases.',a:'Offer them a loyalty discount.'});
-    if(dwr>=70)insights.push({p:'🟢 Positive',c:'var(--green)',t:'Decision win rate is '+dwr+'%. You are making good choices.',a:'Keep using the Decision Engine before every purchase.'});
-    if(!insights.length)insights.push({p:'📋 Info',c:'var(--text2)',t:'Log more data in TradeOS to generate insights.',a:'Start by logging deals and expenses.'});
-    document.getElementById('insightsPanel').innerHTML=insights.map(i=>'<div class="insight-card"><div class="insight-priority" style="color:'+i.c+'">'+i.p+'</div><div class="insight-text">'+i.t+'</div><div class="insight-action">→ '+i.a+'</div></div>').join('');
+    // Snapshot
+    document.getElementById('snapshot').innerHTML=[
+        {l:'Best Product',v:bestP?bestP[0]+' (+'+fm(bestP[1])+')':'N/A'},{l:'Worst Product',v:worstP&&worstP[1]<0?worstP[0]+' ('+fm(worstP[1])+')':'None'},
+        {l:'Active Inventory',v:inv.length+' products'},{l:'Sold This Month',v:soldInv.length+' products'},
+        {l:'Avg Holding Time',v:avgHold+' days'},{l:'Decision Win Rate',v:dwr+'%'},
+        {l:'Cash Runway',v:cashRunway+' days'},{l:'Debt Ratio',v:debtRatio+'%'},
+        {l:'Emergency Fund',v:emergencyPct+'% of net worth'},{l:'Lifetime Profit',v:'+'+fm(totalProfit)}
+    ].map(s=>'<div class="stat-item"><span class="si-label">'+s.l+'</span><span class="si-value">'+s.v+'</span></div>').join('');
 
-    // Best Product
-    document.getElementById('bestProduct').innerHTML=bestP?'<div class="product-card"><div class="rank">#1 Bestseller</div><div class="name">'+bestP[0]+'</div><div class="profit">+'+fm(bestP[1])+' profit</div></div>':'<p style="color:var(--text2);">No sales yet</p>';
-
-    // Top Customer
-    document.getElementById('topCustomer').innerHTML=bestC?'<div class="customer-card"><div class="rank">Top Customer</div><div class="name">'+bestC[0]+'</div><div style="font-size:0.85rem;color:var(--text2);">'+bestC[1]+' purchase(s)</div></div>':'<p style="color:var(--text2);">No customers yet</p>';
-
-    // Bottom Stats
-    document.getElementById('bottomStats').innerHTML=[
-        {v:fm(totalProfit),l:'Lifetime Profit',c:'var(--green)'},{v:closed.length,l:'Total Deals',c:'var(--text)'},
-        {v:app.inventory.length,l:'Products',c:'var(--text)'},{v:app.reviews.length,l:'Reviews',c:'var(--text)'},
-        {v:dwr+'%',l:'Decision Win Rate',c:'var(--blue)'},{v:avgHold||'-',l:'Avg Hold (Days)',c:'var(--amber)'},
-        {v:monthlyROI+'%',l:'Monthly ROI',c:'var(--green)'},{v:cashRunway,l:'Cash Runway',c:'var(--purple)'}
-    ].map(s=>'<div class="big-stat"><div class="val" style="color:'+s.c+'">'+s.v+'</div><div class="lbl">'+s.l+'</div></div>').join('');
+    // Alerts
+    let alerts=[];
+    if(c.emergencyFund<=0)alerts.push('🔴 No emergency fund. Business is vulnerable.');
+    if(debtRatio>50)alerts.push('🔴 High debt ratio ('+debtRatio+'%). Reduce liabilities.');
+    if(avgHold>21)alerts.push('🟡 Inventory sitting too long ('+avgHold+' days).');
+    if(inv.filter(i=>i.quantity<3).length>0)alerts.push('🟡 '+inv.filter(i=>i.quantity<3).length+' product(s) low on stock.');
+    if(mExp>mRev)alerts.push('🔴 Expenses higher than revenue this month.');
+    if(!alerts.length)alerts.push('✅ No critical alerts. Business is stable.');
+    document.getElementById('alertsPanel').innerHTML=alerts.map(a=>'<p style="font-size:0.85rem;margin-bottom:8px;">'+a+'</p>').join('');
 }
-load();render();
+
+function exportData(){if(!app)return;const b=new Blob([JSON.stringify(app)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='tradeos_report_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
 </script>
 </body>
 </html>
