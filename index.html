@@ -2,143 +2,596 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TradeOS • CEO Command</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest" href="manifest.json">
+    <title>TradeOS V1</title>
     <style>
-        :root{--bg:#080c12;--surface:#0f1419;--surface2:#161c24;--border:rgba(255,255,255,0.06);--text:#e6edf3;--text2:#8b949e;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--amber:#d2991d;--purple:#a371f7;--radius:16px;--gap:16px;}
+        :root{--bg:#080c12;--surface:#0f1419;--surface2:#161c24;--surface3:#1a2230;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--text:#e6edf3;--text2:#8b949e;--text3:#6e7681;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--amber:#d2991d;--purple:#a371f7;--radius-sm:8px;--radius:12px;--radius-lg:16px;--font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;--transition:0.2s ease;}
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;padding:20px;min-height:100vh;-webkit-font-smoothing:antialiased;max-width:600px;margin:0 auto;}
-        header{padding:16px 0 24px;border-bottom:1px solid var(--border);margin-bottom:20px;}
-        header .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-        header h1{font-size:1.5rem;font-weight:700;letter-spacing:-0.4px;}header h1 span{color:var(--blue);}
-        .import-zone{background:var(--surface2);border:2px dashed var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:20px;cursor:pointer;transition:0.2s;}.import-zone:hover{border-color:var(--blue);}
-        .import-zone .iz-icon{font-size:1.5rem;margin-bottom:6px;}.import-zone .iz-text{font-size:0.85rem;color:var(--text2);}.import-zone .iz-action{color:var(--blue);font-weight:600;font-size:0.8rem;margin-top:4px;}
-        .grade-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:20px;}
-        .grade-circle{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:2rem;font-weight:800;border:3px solid var(--border);}
-        .grade-A{color:var(--green);border-color:var(--green);}.grade-B{color:var(--blue);border-color:var(--blue);}.grade-C{color:var(--amber);border-color:var(--amber);}.grade-D{color:var(--red);border-color:var(--red);}
-        .grade-label{font-size:0.8rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;}.grade-msg{font-size:0.9rem;margin-top:4px;font-weight:600;}
-        .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-bottom:20px;}
-        .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}.kpi .lbl{font-size:0.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;}
-        .kpi .val{font-size:1.5rem;font-weight:700;letter-spacing:-0.4px;}.kpi .vs{font-size:0.7rem;color:var(--text2);margin-top:4px;}
-        .section{margin-bottom:20px;}.section h3{font-size:0.8rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-        .decision-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;border-left:4px solid var(--border);}
-        .decision-card.buy{border-left-color:var(--green);}.decision-card.watch{border-left-color:var(--amber);}.decision-card.stop{border-left-color:var(--red);}
-        .decision-card .dc-title{font-weight:700;font-size:0.95rem;margin-bottom:4px;}.decision-card .dc-reason{font-size:0.8rem;color:var(--text2);margin-bottom:6px;}.decision-card .dc-action{font-size:0.8rem;font-weight:600;}
-        .stat-list .stat-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:0.85rem;}.stat-list .stat-item:last-child{border-bottom:none;}
-        .stat-item .si-label{color:var(--text2);}.stat-item .si-value{font-weight:600;}
-        .btn{display:block;width:100%;padding:14px;border-radius:12px;border:none;font-weight:600;font-size:0.9rem;cursor:pointer;text-align:center;margin-bottom:8px;}.btn-primary{background:var(--blue);color:#fff;}.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
-        .last-update{text-align:center;font-size:0.7rem;color:var(--text2);margin-top:16px;}
-        input[type=file]{display:none;}
+        body{background:var(--bg);color:var(--text);font-family:var(--font);max-width:500px;margin:0 auto;padding:0 0 100px 0;line-height:1.5;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+        header{position:sticky;top:0;z-index:30;background:rgba(8,12,18,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+        header h1{font-size:1.2rem;font-weight:700;letter-spacing:-0.3px;}header h1 span{color:var(--blue);}
+        header .streak-badge{background:rgba(210,153,29,0.15);color:var(--amber);padding:4px 10px;border-radius:20px;font-size:0.7rem;font-weight:700;}
+        .page{display:none;padding:16px;animation:fadeIn 0.25s ease;}.page.active{display:block;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+        .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+        .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+        .kpi{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;}.kpi .val{font-size:1.4rem;font-weight:700;}.kpi .lbl{font-size:0.65rem;color:var(--text2);text-transform:uppercase;margin-top:4px;}
+        .btn{display:block;width:100%;padding:14px;border-radius:var(--radius-sm);border:none;font-weight:600;font-size:0.85rem;cursor:pointer;text-align:center;transition:var(--transition);font-family:var(--font);}.btn:active{transform:scale(0.97);}
+        .btn-primary{background:var(--blue);color:#fff;}.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}.btn-danger{background:rgba(248,81,73,0.15);color:var(--red);}
+        .btn-small{display:inline-block;width:auto;padding:8px 14px;font-size:0.75rem;border-radius:8px;}
+        .btn-xl{display:flex;align-items:center;gap:8px;padding:16px;border-radius:var(--radius);font-size:0.9rem;margin-bottom:10px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);cursor:pointer;width:100%;font-family:var(--font);text-align:left;}.btn-xl:active{background:var(--surface3);}.btn-xl .icon{font-size:1.3rem;}
+        input,select,textarea{width:100%;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:0.85rem;font-family:var(--font);-webkit-appearance:none;}input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);}
+        label{display:block;font-size:0.7rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+        .badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:0.65rem;font-weight:700;}.badge-green{background:rgba(63,185,80,0.15);color:var(--green);}.badge-red{background:rgba(248,81,73,0.15);color:var(--red);}.badge-blue{background:rgba(88,166,255,0.15);color:var(--blue);}.badge-amber{background:rgba(210,153,29,0.15);color:var(--amber);}
+        .row-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;cursor:pointer;}.row-item:active{background:var(--surface);}.row-item .rt{font-weight:600;font-size:0.9rem;}.row-item .rm{font-size:0.7rem;color:var(--text2);margin-top:3px;}
+        .flex-between{display:flex;justify-content:space-between;align-items:center;}.flex-row{display:flex;gap:8px;align-items:center;}
+        .mt-1{margin-top:4px;}.mt-2{margin-top:8px;}.mt-3{margin-top:12px;}.mt-4{margin-top:16px;}.mb-2{margin-bottom:8px;}.mb-3{margin-bottom:12px;}
+        .text-green{color:var(--green);}.text-red{color:var(--red);}.text-blue{color:var(--blue);}.text-amber{color:var(--amber);}.text-gray{color:var(--text2);}.text-xs{font-size:0.7rem;}.text-sm{font-size:0.8rem;}.text-lg{font-size:1.1rem;}.text-xl{font-size:1.5rem;}.font-bold{font-weight:700;}.text-center{text-align:center;}
+        .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}.chip{padding:6px 12px;border-radius:16px;font-size:0.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);}.chip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+        .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);padding:12px 20px;border-radius:20px;font-size:0.8rem;font-weight:600;z-index:50;pointer-events:none;opacity:0;transition:opacity 0.3s;}.toast.show{opacity:1;}
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:40;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}.modal-content{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:20px;width:100%;max-width:460px;margin-top:10px;}
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+        .section-title{font-size:0.75rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+        .insight-card{background:var(--surface2);border-left:3px solid var(--blue);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin-bottom:8px;}.insight-card.warning{border-left-color:var(--amber);}.insight-card.danger{border-left-color:var(--red);}.insight-card.success{border-left-color:var(--green);}
+        .leaderboard-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}.leaderboard-item:last-child{border-bottom:none;}.leaderboard-item .rank{font-size:1.2rem;font-weight:800;width:30px;}.leaderboard-item .info{flex:1;}.leaderboard-item .profit{font-weight:700;color:var(--green);}
+        hr{border:none;border-top:1px solid var(--border);margin:12px 0;}
+        nav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 4px 14px 4px;z-index:20;max-width:500px;margin:0 auto;}
+        nav button{background:none;border:none;color:var(--text3);font-size:0.55rem;font-weight:600;cursor:pointer;padding:4px 2px;border-radius:6px;display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;}nav button.active{color:var(--blue);}nav button svg{width:20px;height:20px;}
     </style>
 </head>
 <body>
+<header><h1><span>Trade</span>OS</h1><span class="streak-badge" id="streakBadge">🔥 0 days</span></header>
+<div class="toast" id="toast"></div>
 
-<header>
-    <div class="top-row"><h1><span>Trade</span>OS CEO</h1><span style="font-size:0.7rem;color:var(--text2);" id="lastUpdated">No data</span></div>
-    <p style="font-size:0.8rem;color:var(--text2);">Command center for business decisions</p>
-</header>
-
-<div class="import-zone" onclick="document.getElementById('importFile').click()">
-    <div class="iz-icon">📥</div>
-    <div class="iz-text">Tap to import weekly report from Nigeria</div>
-    <div class="iz-action">Import JSON file →</div>
-</div>
-<input type="file" id="importFile" accept=".json" onchange="importData(event)">
-
-<div id="mainContent" style="display:none;">
-    <div class="grade-card" id="gradeCard"></div>
-    <div class="kpi-row" id="kpiRow"></div>
-    <div class="section"><h3>🧠 Decisions You Should Make This Week</h3><div id="decisionsPanel"></div></div>
-    <div class="section"><h3>📊 Business Snapshot</h3><div class="stat-list" id="snapshot"></div></div>
-    <div class="section"><h3>⚠ What Needs Attention</h3><div id="alertsPanel"></div></div>
-    <button class="btn btn-secondary" onclick="exportData()">📥 Export This Report</button>
-</div>
-
-<div id="emptyState" style="text-align:center;padding:40px 0;">
-    <p style="font-size:3rem;margin-bottom:12px;">📊</p>
-    <p style="color:var(--text2);font-size:0.9rem;">No data yet.</p>
-    <p style="color:var(--text2);font-size:0.8rem;margin-top:4px;">Import the weekly file from Nigeria to see the full business picture and get decision recommendations.</p>
+<!-- PULSE -->
+<div class="page active" id="page-pulse">
+    <div class="card"><div class="section-title">📊 Financial Position</div>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="val" id="pulseNW">₦0</div><div class="lbl">Net Worth</div></div>
+            <div class="kpi"><div class="val" id="pulseCash">₦0</div><div class="lbl">Cash</div></div>
+            <div class="kpi"><div class="val" id="pulseInventory">₦0</div><div class="lbl">Inventory</div></div>
+            <div class="kpi"><div class="val" id="pulseReceivables">₦0</div><div class="lbl">Receivables</div></div>
+        </div>
+    </div>
+    <div class="card"><div class="section-title">📈 This Month</div>
+        <div class="kpi-grid">
+            <div class="kpi"><div class="val text-green" id="pulseRev">₦0</div><div class="lbl">Revenue</div></div>
+            <div class="kpi"><div class="val text-red" id="pulseExp">₦0</div><div class="lbl">Expenses</div></div>
+            <div class="kpi"><div class="val" id="pulseNet">₦0</div><div class="lbl">Net Profit</div></div>
+            <div class="kpi"><div class="val" id="pulseScore">-</div><div class="lbl">Health Score</div></div>
+        </div>
+    </div>
+    <div class="card"><div class="section-title">🧠 Strategic Recommendations</div><div id="strategyPanel"><p class="text-xs text-gray">Log data to get recommendations</p></div></div>
+    <div class="card"><div class="section-title">🚨 Leak Detector</div><div id="leakPanel"><p class="text-xs text-gray">Log expenses to see leaks</p></div></div>
+    <div class="card"><div class="section-title">🏆 Product Leaderboard</div><div id="leaderboard"><p class="text-xs text-gray">No sales yet</p></div></div>
 </div>
 
-<div class="last-update">TradeOS CEO • Built for business owners managing from abroad</div>
+<!-- LOG -->
+<div class="page" id="page-log">
+    <h2 class="text-lg font-bold mb-3">Quick Log</h2>
+    <button class="btn-xl" onclick="openLogForm('sale')"><span class="icon">💰</span> Sold Something</button>
+    <button class="btn-xl" onclick="openLogForm('stock')"><span class="icon">📦</span> Bought Stock</button>
+    <button class="btn-xl" onclick="openLogForm('expense')"><span class="icon">💸</span> Spent Money</button>
+    <button class="btn-xl" onclick="openLogForm('income')"><span class="icon">📥</span> Received Money</button>
+    <button class="btn-xl" onclick="openLogForm('debt')"><span class="icon">📋</span> Customer Paid Debt</button>
+    <button class="btn-xl" onclick="openDecisionForm()"><span class="icon">🎯</span> Log a Decision</button>
+</div>
+
+<!-- RECORDS -->
+<div class="page" id="page-records">
+    <div class="chip-row" id="recordsTabs">
+        <span class="chip active" onclick="switchRecordsTab('inventory')">📦 Stock</span>
+        <span class="chip" onclick="switchRecordsTab('deals')">🤝 Deals</span>
+        <span class="chip" onclick="switchRecordsTab('expenses')">💸 Costs</span>
+        <span class="chip" onclick="switchRecordsTab('income')">📥 Income</span>
+        <span class="chip" onclick="switchRecordsTab('debts')">📋 Debts</span>
+    </div>
+    <div id="recordsList"></div>
+</div>
+
+<!-- YOU -->
+<div class="page" id="page-you">
+    <div class="card text-center"><div style="font-size:3rem;">👤</div><div class="text-lg font-bold">Entrepreneur</div></div>
+    <button class="btn btn-secondary mt-2" onclick="openReviewForm()">📝 Weekly Review</button>
+    <button class="btn btn-secondary mt-2" onclick="exportData()">📥 Export Backup</button>
+    <button class="btn btn-secondary mt-2" onclick="document.getElementById('importFile').click()">📤 Import Backup</button>
+    <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
+    <button class="btn btn-danger mt-2" onclick="resetAll()">🗑 Reset All Data</button>
+    <p class="text-xs text-gray text-center mt-3" id="backupNote"></p>
+</div>
+
+<div class="modal" id="genericModal" style="display:none;"><div class="modal-content" id="modalContent"></div></div>
+
+<nav id="mainNav">
+    <button class="active" data-page="pulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Pulse</button>
+    <button data-page="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Log</button>
+    <button data-page="records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/></svg>Records</button>
+    <button data-page="you"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>You</button>
+</nav>
 
 <script>
-const K='tradeos_final_v3';let app=null;
-function fm(n){return'₦'+Number(n).toLocaleString();}
+// ==========================================
+// ENGINE 1: STORAGE ENGINE
+// ==========================================
+const STORAGE_KEY = 'tradeos_v2_engine';
+const StorageEngine = {
+    load() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) return JSON.parse(raw);
+        } catch(e) { console.error('Storage load failed', e); }
+        return null;
+    },
+    save(data) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch(e) {
+            this.showToast('⚠ Storage full. Export your data.');
+        }
+    },
+    exportData() {
+        const blob = new Blob([JSON.stringify(app)], {type:'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'tradeos_backup_' + new Date().toISOString().slice(0,10) + '.json';
+        a.click();
+        app.meta.lastBackup = new Date().toISOString();
+        StorageEngine.save(app);
+    },
+    importData(file, callback) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            try {
+                const data = JSON.parse(ev.target.result);
+                if (data.capital && data.inventory && data.deals && data.expenses) {
+                    callback(data);
+                } else {
+                    throw new Error('Invalid structure');
+                }
+            } catch(e) {
+                alert('❌ Invalid file. Please use a TradeOS backup file.');
+            }
+        };
+        reader.readAsText(file);
+    },
+    showToast(msg) {
+        const t = document.getElementById('toast');
+        if(!t) return;
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2000);
+    }
+};
 
-function importData(e){
-    const f=e.target.files[0];if(!f)return;const r=new FileReader();
-    r.onload=function(ev){try{const d=JSON.parse(ev.target.result);if(d.capital&&d.decisions){app=d;renderAll();}else{alert('Invalid file. Please use the file exported from TradeOS.');}}catch(x){alert('Invalid file.');}};
-    r.readAsText(f);e.target.value='';
+// ==========================================
+// DEFAULT DATA
+// ==========================================
+function getDefaultApp() {
+    return {
+        capital: {cash:0, emergencyFund:0, inventoryValue:0, receivables:0, otherAssets:0, payables:0, liabilities:0},
+        capitalHistory: [],
+        inventory: [],
+        deals: [],
+        expenses: [],
+        income: [],
+        receivablesList: [],
+        decisions: [],
+        reviews: [],
+        achievements: [],
+        meta: {lastBackup:null, version:'2.0', streak:0, lastActive:null, totalDeals:0, lifetimeProfit:0}
+    };
 }
 
-function renderAll(){
-    if(!app){return;}
-    document.getElementById('emptyState').style.display='none';
-    document.getElementById('mainContent').style.display='block';
-    document.getElementById('lastUpdated').textContent='Data: '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+// ==========================================
+// INITIALIZE APP
+// ==========================================
+let app = StorageEngine.load() || getDefaultApp();
+if (!app.income) app.income = [];
+if (!app.receivablesList) app.receivablesList = [];
+if (!app.decisions) app.decisions = [];
+if (!app.achievements) app.achievements = [];
+if (!app.meta) app.meta = {streak:0, lastActive:null, totalDeals:0, lifetimeProfit:0};
 
-    const c=app.capital;const now=new Date();const tm=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-    const closed=(app.deals||[]).filter(d=>d.status==='Closed');const mDeals=closed.filter(d=>d.date&&d.date.startsWith(tm));
-    const mRev=mDeals.reduce((s,d)=>s+(d.profit||0),0);const mExp=(app.expenses||[]).filter(e=>e.date&&e.date.startsWith(tm)).reduce((s,e)=>s+e.amount,0);
-    const mNet=mRev-mExp;const totalProfit=closed.reduce((s,d)=>s+(d.profit||0),0);
-    const ta=(c.cash||0)+(c.emergencyFund||0)+(c.inventoryValue||0)+(c.receivables||0)+(c.otherAssets||0);
-    const tl=(c.payables||0)+(c.liabilities||0);const net=ta-tl;
-    const prods={};closed.forEach(d=>{const k=d.product||'Other';prods[k]=(prods[k]||0)+(d.profit||0);});
-    const bestP=Object.entries(prods).sort((a,b)=>b[1]-a[1])[0];
-    const worstP=Object.entries(prods).sort((a,b)=>a[1]-b[1])[0];
-    const decs=(app.decisions||[]).filter(d=>d.status!=='pending');const appr=decs.filter(d=>d.status==='approved').length;
-    const dwr=decs.length?Math.round(appr/decs.length*100):0;
-    const inv=(app.inventory||[]).filter(i=>i.status==='Active');const soldInv=(app.inventory||[]).filter(i=>i.status==='Sold');
-    const avgHold=soldInv.length?Math.round(soldInv.reduce((s,i)=>{const pd=new Date(i.purchaseDate||i.date);const sd=new Date(i.date);return s+(sd-pd)/86400000;},0)/soldInv.length):0;
-    const cashRunway=mExp>0&&c.cash>0?Math.round(c.cash/(mExp/30)):0;
-    const emergencyPct=net>0?Math.round((c.emergencyFund||0)/net*100):0;
-    const debtRatio=ta>0?Math.round((tl/ta)*100):0;
+function saveApp() { StorageEngine.save(app); }
+function fm(n) { return '₦' + Number(n).toLocaleString(); }
+function gid() { return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
 
-    // Grade
-    let grade='D',gradeClass='grade-D',gradeMsg='Needs serious attention',gradeColor='var(--red)';
-    if(net>0&&c.emergencyFund>0&&mNet>0&&dwr>=60){grade='A';gradeClass='grade-A';gradeMsg='Healthy business. Keep going.';gradeColor='var(--green)';}
-    else if(net>0&&mNet>0&&dwr>=50){grade='B';gradeClass='grade-B';gradeMsg='Good. A few areas to improve.';gradeColor='var(--blue)';}
-    else if(net>0||mNet>0){grade='C';gradeClass='grade-C';gradeMsg='Surviving. Needs tighter management.';gradeColor='var(--amber)';}
-    document.getElementById('gradeCard').innerHTML='<div class="grade-label">BUSINESS HEALTH GRADE</div><div class="grade-circle '+gradeClass+'">'+grade+'</div><div class="grade-msg">'+gradeMsg+'</div>';
+// ==========================================
+// ENGINE 2: FINANCIAL ENGINE
+// ==========================================
+const FinancialEngine = {
+    processEvent(event) {
+        switch(event.type) {
+            case 'SALE_PAID':
+                app.capital.cash = (app.capital.cash || 0) + (event.sellPrice || 0);
+                app.meta.totalDeals = (app.meta.totalDeals || 0) + 1;
+                app.meta.lifetimeProfit = (app.meta.lifetimeProfit || 0) + ((event.sellPrice||0) - (event.buyPrice||0));
+                break;
+            case 'SALE_PENDING':
+                app.capital.receivables = (app.capital.receivables || 0) + (event.sellPrice || 0);
+                break;
+            case 'STOCK_PURCHASE':
+                app.capital.cash = (app.capital.cash || 0) - ((event.cost||0) * (event.quantity||1));
+                break;
+            case 'EXPENSE':
+                app.capital.cash = (app.capital.cash || 0) - (event.amount || 0);
+                break;
+            case 'INCOME':
+                app.capital.cash = (app.capital.cash || 0) + (event.amount || 0);
+                break;
+            case 'DEBT_PAYMENT':
+                app.capital.cash = (app.capital.cash || 0) + (event.amount || 0);
+                app.capital.receivables = Math.max(0, (app.capital.receivables||0) - (event.amount||0));
+                break;
+        }
+        this.updateInventoryValue();
+        this.takeSnapshot();
+    },
+    updateInventoryValue() {
+        app.capital.inventoryValue = app.inventory
+            .filter(i => i.status === 'Active')
+            .reduce((s, i) => s + ((i.cost||0) * (i.quantity||1)), 0);
+    },
+    takeSnapshot() {
+        const today = new Date().toISOString().slice(0,10);
+        const last = app.capitalHistory[app.capitalHistory.length - 1];
+        if (!last || last.date !== today) {
+            app.capitalHistory.push({
+                date: today,
+                netWorth: this.getNetWorth(),
+                cash: app.capital.cash,
+                inventoryValue: app.capital.inventoryValue,
+                receivables: app.capital.receivables
+            });
+        }
+    },
+    getNetWorth() {
+        return (app.capital.cash||0) + (app.capital.emergencyFund||0) + (app.capital.inventoryValue||0) + 
+               (app.capital.receivables||0) + (app.capital.otherAssets||0) - (app.capital.payables||0) - (app.capital.liabilities||0);
+    },
+    getRevenue(month) {
+        return app.deals.filter(d => d.date && d.date.startsWith(month) && d.status === 'Closed')
+            .reduce((s, d) => s + (d.profit||0), 0);
+    },
+    getExpenses(month) {
+        return app.expenses.filter(e => e.date && e.date.startsWith(month))
+            .reduce((s, e) => s + (e.amount||0), 0);
+    },
+    getMonthlyROI() {
+        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+        const exp = this.getExpenses(tm);
+        if (exp === 0) return 0;
+        return Math.round(((this.getRevenue(tm) - exp) / exp) * 100);
+    },
+    getCashRunway() {
+        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+        const monthlyExp = this.getExpenses(tm);
+        if (monthlyExp === 0 || !app.capital.cash) return 999;
+        return Math.round(app.capital.cash / (monthlyExp / 30));
+    }
+};
 
-    // KPIs
-    document.getElementById('kpiRow').innerHTML=[
-        {l:'Monthly Revenue',v:'+'+fm(mRev),c:'var(--green)'},{l:'Monthly Expenses',v:'-'+fm(mExp),c:'var(--red)'},
-        {l:'Net Profit',v:(mNet>=0?'+':'')+fm(mNet),c:mNet>=0?'var(--green)':'var(--red)'},{l:'Net Worth',v:fm(net),c:net>=0?'var(--green)':'var(--red)'}
-    ].map(k=>'<div class="kpi"><div class="lbl">'+k.l+'</div><div class="val" style="color:'+k.c+'">'+k.v+'</div></div>').join('');
+// ==========================================
+// ENGINE 3: INVENTORY ENGINE
+// ==========================================
+const InventoryEngine = {
+    getActiveProducts() { return app.inventory.filter(i => i.status === 'Active'); },
+    getSoldProducts() { return app.inventory.filter(i => i.status === 'Sold'); },
+    getProductProfit(productName) {
+        return app.deals.filter(d => d.product === productName && d.status === 'Closed')
+            .reduce((s, d) => s + (d.profit||0), 0);
+    },
+    getProfitByProduct() {
+        const map = {};
+        app.deals.filter(d => d.status === 'Closed').forEach(d => {
+            const k = d.product || 'Uncategorized';
+            map[k] = (map[k] || 0) + (d.profit||0);
+        });
+        return map;
+    },
+    getTopProducts(limit = 5) {
+        return Object.entries(this.getProfitByProduct())
+            .sort((a, b) => b[1] - a[1]).slice(0, limit)
+            .map(([name, profit]) => ({name, profit}));
+    }
+};
 
-    // Decisions
-    let decsHTML='';
-    if(bestP&&bestP[1]>0)decsHTML+='<div class="decision-card buy"><div class="dc-title">🟢 BUY MORE: '+bestP[0]+'</div><div class="dc-reason">This is your most profitable product. It generated +'+fm(bestP[1])+' in profit.</div><div class="dc-action" style="color:var(--green);">→ Send funds to restock this item immediately.</div></div>';
-    if(worstP&&worstP[1]<0)decsHTML+='<div class="decision-card stop"><div class="dc-title">🔴 STOP BUYING: '+worstP[0]+'</div><div class="dc-reason">This product is losing money ('+fm(worstP[1])+'). It is dragging the business down.</div><div class="dc-action" style="color:var(--red);">→ Remove from inventory. Sell remaining stock at discount.</div></div>';
-    if(c.emergencyFund<=0)decsHTML+='<div class="decision-card watch"><div class="dc-title">🟡 BUILD EMERGENCY FUND</div><div class="dc-reason">Your business has zero emergency savings. One bad month could shut everything down.</div><div class="dc-action" style="color:var(--amber);">→ Set aside 10% of this month\'s profit as emergency reserve.</div></div>';
-    if(avgHold>14)decsHTML+='<div class="decision-card watch"><div class="dc-title">🟡 INVENTORY MOVING TOO SLOW</div><div class="dc-reason">Products are sitting for '+avgHold+' days on average. Healthy is under 14 days.</div><div class="dc-action" style="color:var(--amber);">→ Run a promotion. Bundle slow items with fast sellers.</div></div>';
-    if(mExp>mRev&&mRev>0)decsHTML+='<div class="decision-card stop"><div class="dc-title">🔴 EXPENSES EXCEED REVENUE</div><div class="dc-reason">You spent '+fm(mExp)+' but only made '+fm(mRev)+' this month.</div><div class="dc-action" style="color:var(--red);">→ Cut one major expense category immediately. Review the Costs breakdown.</div></div>';
-    if(!decsHTML)decsHTML='<p style="color:var(--text2);text-align:center;">Log more data to get decision recommendations.</p>';
-    document.getElementById('decisionsPanel').innerHTML=decsHTML;
+// ==========================================
+// ENGINE 4: CUSTOMER ENGINE
+// ==========================================
+const CustomerEngine = {
+    getCustomerHistory(name) { return app.deals.filter(d => d.customer === name); },
+    getLifetimeProfit(name) { return this.getCustomerHistory(name).filter(d => d.status === 'Closed').reduce((s, d) => s + (d.profit||0), 0); },
+    getTopCustomers(limit = 3) {
+        const map = {};
+        app.deals.filter(d => d.status === 'Closed').forEach(d => {
+            const k = d.customer || 'Unknown';
+            map[k] = (map[k] || 0) + 1;
+        });
+        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, limit).map(([name, count]) => ({name, count}));
+    }
+};
 
-    // Snapshot
-    document.getElementById('snapshot').innerHTML=[
-        {l:'Best Product',v:bestP?bestP[0]+' (+'+fm(bestP[1])+')':'N/A'},{l:'Worst Product',v:worstP&&worstP[1]<0?worstP[0]+' ('+fm(worstP[1])+')':'None'},
-        {l:'Active Inventory',v:inv.length+' products'},{l:'Sold This Month',v:soldInv.length+' products'},
-        {l:'Avg Holding Time',v:avgHold+' days'},{l:'Decision Win Rate',v:dwr+'%'},
-        {l:'Cash Runway',v:cashRunway+' days'},{l:'Debt Ratio',v:debtRatio+'%'},
-        {l:'Emergency Fund',v:emergencyPct+'% of net worth'},{l:'Lifetime Profit',v:'+'+fm(totalProfit)}
-    ].map(s=>'<div class="stat-item"><span class="si-label">'+s.l+'</span><span class="si-value">'+s.v+'</span></div>').join('');
+// ==========================================
+// ENGINE 5: ANALYTICS ENGINE
+// ==========================================
+const AnalyticsEngine = {
+    generateMetrics() {
+        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+        return {
+            netWorth: FinancialEngine.getNetWorth(),
+            revenue: FinancialEngine.getRevenue(tm),
+            expenses: FinancialEngine.getExpenses(tm),
+            monthlyROI: FinancialEngine.getMonthlyROI(),
+            cashRunway: FinancialEngine.getCashRunway(),
+            topProducts: InventoryEngine.getTopProducts(5),
+            topCustomers: CustomerEngine.getTopCustomers(3),
+            profitByProduct: InventoryEngine.getProfitByProduct(),
+            cash: app.capital.cash,
+            inventoryValue: app.capital.inventoryValue,
+            receivables: app.capital.receivables,
+            lifetimeProfit: app.meta.lifetimeProfit || 0,
+            totalDeals: app.deals.filter(d => d.status === 'Closed').length,
+            totalDecisions: app.decisions.length,
+            totalReviews: app.reviews.length
+        };
+    }
+};
 
-    // Alerts
-    let alerts=[];
-    if(c.emergencyFund<=0)alerts.push('🔴 No emergency fund. Business is vulnerable.');
-    if(debtRatio>50)alerts.push('🔴 High debt ratio ('+debtRatio+'%). Reduce liabilities.');
-    if(avgHold>21)alerts.push('🟡 Inventory sitting too long ('+avgHold+' days).');
-    if(inv.filter(i=>i.quantity<3).length>0)alerts.push('🟡 '+inv.filter(i=>i.quantity<3).length+' product(s) low on stock.');
-    if(mExp>mRev)alerts.push('🔴 Expenses higher than revenue this month.');
-    if(!alerts.length)alerts.push('✅ No critical alerts. Business is stable.');
-    document.getElementById('alertsPanel').innerHTML=alerts.map(a=>'<p style="font-size:0.85rem;margin-bottom:8px;">'+a+'</p>').join('');
+// ==========================================
+// ENGINE 6: STRATEGY ENGINE
+// ==========================================
+const StrategyEngine = {
+    generateRecommendations(metrics) {
+        const recs = [];
+        if (metrics.topProducts.length > 0) {
+            recs.push({type:'success', msg:'🏆 <strong>' + metrics.topProducts[0].name + '</strong> is your best product. Allocate more capital here.'});
+        }
+        if (metrics.cashRunway < 14 && metrics.cashRunway > 0) {
+            recs.push({type:'danger', msg:'⚠ Only <strong>' + metrics.cashRunway + ' days</strong> of cash runway. Reduce expenses.'});
+        }
+        if (metrics.receivables > 0) {
+            recs.push({type:'warning', msg:'📋 <strong>' + fm(metrics.receivables) + '</strong> in unpaid receivables. Follow up.'});
+        }
+        if (!app.capital.emergencyFund) {
+            recs.push({type:'warning', msg:'🛡 No emergency fund. Set aside 10% of profit.'});
+        }
+        if (metrics.monthlyROI > 20) {
+            recs.push({type:'success', msg:'📈 Monthly ROI is <strong>' + metrics.monthlyROI + '%</strong>. Business is efficient.'});
+        }
+        if (metrics.totalReviews === 0) {
+            recs.push({type:'', msg:'📝 Write your first weekly review to build discipline.'});
+        }
+        return recs.length ? recs : [{type:'', msg:'Log more data to get strategic recommendations.'}];
+    }
+};
+
+// ==========================================
+// UI HELPERS
+// ==========================================
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#mainNav button').forEach(b => b.classList.remove('active'));
+    const pg = document.getElementById('page-' + page); if(pg) pg.classList.add('active');
+    const btn = document.querySelector('#mainNav button[data-page="' + page + '"]'); if(btn) btn.classList.add('active');
+    if (page === 'pulse') renderPulse();
+    if (page === 'records') switchRecordsTab(recordsTab || 'inventory');
+    if (page === 'you') renderYou();
+}
+document.getElementById('mainNav').addEventListener('click', function(e) {
+    const b = e.target.closest('button'); if (b && b.dataset.page) showPage(b.dataset.page);
+});
+
+function renderPulse() {
+    const m = AnalyticsEngine.generateMetrics();
+    const recs = StrategyEngine.generateRecommendations(m);
+    try {
+        document.getElementById('pulseNW').textContent = fm(m.netWorth);
+        document.getElementById('pulseNW').style.color = m.netWorth >= 0 ? 'var(--green)' : 'var(--red)';
+        document.getElementById('pulseCash').textContent = fm(m.cash);
+        document.getElementById('pulseInventory').textContent = fm(m.inventoryValue);
+        document.getElementById('pulseReceivables').textContent = fm(m.receivables);
+        document.getElementById('pulseRev').textContent = '+'+fm(m.revenue);
+        document.getElementById('pulseExp').textContent = '-'+fm(m.expenses);
+        const net = m.revenue - m.expenses;
+        const ne = document.getElementById('pulseNet'); ne.textContent = (net>=0?'+':'')+fm(net); ne.style.color = net>=0?'var(--green)':'var(--red)';
+        document.getElementById('pulseScore').textContent = Math.max(0, Math.min(100, 50 + m.monthlyROI + (m.cash > 0 ? 10 : 0) + (m.receivables === 0 ? 10 : 0)));
+        document.getElementById('strategyPanel').innerHTML = recs.map(r => '<div class="insight-card ' + r.type + '">' + r.msg + '</div>').join('');
+        // Leak detector
+        const cats = {}; app.expenses.forEach(e => { cats[e.category] = (cats[e.category]||0) + (e.amount||0); });
+        const leaks = Object.entries(cats).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]).slice(0,3);
+        document.getElementById('leakPanel').innerHTML = leaks.length ? leaks.map(([k,v]) => '<div class="insight-card warning">🚨 <strong>' + k + '</strong>: ' + fm(v) + '</div>').join('') : '<p class="text-xs text-gray">Log expenses to see leaks</p>';
+        // Leaderboard
+        document.getElementById('leaderboard').innerHTML = m.topProducts.length ? m.topProducts.map((p,i) => '<div class="leaderboard-item"><span class="rank">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1))+'</span><div class="info"><span class="rt">'+p.name+'</span></div><span class="profit">+'+fm(p.profit)+'</span></div>').join('') : '<p class="text-xs text-gray">No sales yet</p>';
+    } catch(e) { console.error('Render pulse error', e); }
 }
 
-function exportData(){if(!app)return;const b=new Blob([JSON.stringify(app)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='tradeos_report_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+// ==========================================
+// LOG FORMS
+// ==========================================
+function openLogForm(type) {
+    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
+    if (!m || !c) return;
+    let h = '';
+    if (type === 'sale') {
+        h = '<div class="flex-between mb-3"><h3 class="font-bold">💰 Sold Something</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
+        h += '<label>Product</label><select id="fProduct">' + app.inventory.filter(i => i.status === 'Active').map(i => '<option value="' + i.product + '">' + i.product + ' (' + (i.quantity||1) + ' left)</option>').join('') + '<option value="">Other</option></select>';
+        h += '<input type="text" id="fProductManual" class="mt-1" placeholder="Or type product name">';
+        h += '<label class="mt-2">Customer</label><input type="text" id="fCustomer">';
+        h += '<div class="grid-2 mt-2"><div><label>Buy Price</label><input type="number" id="fBuy"></div><div><label>Sell Price</label><input type="number" id="fSell"></div></div>';
+        h += '<label class="mt-2">Payment</label><select id="fStatus"><option>Paid</option><option>Pending</option></select>';
+        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'sale\')">Save Sale</button>';
+    } else if (type === 'stock') {
+        h = '<div class="flex-between mb-3"><h3 class="font-bold">📦 Bought Stock</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
+        h += '<label>Product *</label><input type="text" id="fProduct">';
+        h += '<div class="grid-3 mt-2"><div><label>Qty</label><input type="number" id="fQty" value="1"></div><div><label>Cost</label><input type="number" id="fCost"></div><div><label>Sell</label><input type="number" id="fSell"></div></div>';
+        h += '<label class="mt-2">Supplier</label><input type="text" id="fSupplier">';
+        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'stock\')">Save Stock</button>';
+    } else if (type === 'expense') {
+        h = '<div class="flex-between mb-3"><h3 class="font-bold">💸 Spent Money</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
+        h += '<label>Description</label><input type="text" id="fDesc">';
+        h += '<label class="mt-2">Amount</label><input type="number" id="fAmount">';
+        h += '<label class="mt-2">Category</label><select id="fCat"><option>Transport</option><option>Data</option><option>Food</option><option>Rent</option><option>Marketing</option><option>Supplies</option><option>Other</option></select>';
+        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'expense\')">Save Expense</button>';
+    } else if (type === 'income') {
+        h = '<div class="flex-between mb-3"><h3 class="font-bold">📥 Received Money</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
+        h += '<label>Source</label><input type="text" id="fSource">';
+        h += '<label class="mt-2">Amount</label><input type="number" id="fAmount">';
+        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'income\')">Save Income</button>';
+    } else if (type === 'debt') {
+        h = '<div class="flex-between mb-3"><h3 class="font-bold">📋 Customer Paid Debt</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
+        h += '<label>Customer</label><select id="fDebtCustomer">' + app.receivablesList.filter(r => r.status !== 'Paid').map(r => '<option value="' + r.id + '">' + r.customer + ' (Owes ' + fm(r.remainingAmount) + ')</option>').join('') + '</select>';
+        if (app.receivablesList.filter(r => r.status !== 'Paid').length === 0) h += '<p class="text-xs text-gray mb-2">No outstanding debts.</p>';
+        h += '<label class="mt-2">Amount Received</label><input type="number" id="fAmount">';
+        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'debt\')">Save Payment</button>';
+    }
+    c.innerHTML = h; m.style.display = 'flex';
+}
+function closeModal() { const m = document.getElementById('genericModal'); if (m) m.style.display = 'none'; }
+function saveLog(type) {
+    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+    const gn = (id) => { const el = document.getElementById(id); return el ? Number(el.value) : 0; };
+    if (type === 'sale') {
+        const prod = g('fProduct') || g('fProductManual'); if (!prod) { StorageEngine.showToast('Product required'); return; }
+        const status = g('fStatus');
+        const obj = {id:gid(), customer:g('fCustomer'), product:prod, buyPrice:gn('fBuy'), sellPrice:gn('fSell'), profit:gn('fSell')-gn('fBuy'), status: status === 'Paid' ? 'Closed' : 'Pending', paymentStatus: status, date: new Date().toISOString().slice(0,10)};
+        app.deals.unshift(obj);
+        FinancialEngine.processEvent({type: status === 'Paid' ? 'SALE_PAID' : 'SALE_PENDING', sellPrice: obj.sellPrice, buyPrice: obj.buyPrice});
+        if (status !== 'Paid') {
+            app.receivablesList.push({id:gid(), dealId:obj.id, customer:obj.customer, totalAmount:obj.sellPrice, paidAmount:0, remainingAmount:obj.sellPrice, status:'Pending'});
+        }
+        const inv = app.inventory.find(i => i.product === prod && i.status === 'Active');
+        if (inv) { inv.quantity = (inv.quantity||1) - 1; if (inv.quantity <= 0) inv.status = 'Sold'; }
+    } else if (type === 'stock') {
+        const prod = g('fProduct'); if (!prod) { StorageEngine.showToast('Product required'); return; }
+        const qty = gn('fQty') || 1; const cost = gn('fCost');
+        app.inventory.unshift({id:gid(), product:prod, quantity:qty, cost:cost, sellPrice:gn('fSell'), supplier:g('fSupplier'), status:'Active', purchaseDate: new Date().toISOString().slice(0,10)});
+        FinancialEngine.processEvent({type:'STOCK_PURCHASE', cost, quantity:qty});
+    } else if (type === 'expense') {
+        const amt = gn('fAmount'); if (!amt) { StorageEngine.showToast('Amount required'); return; }
+        app.expenses.unshift({id:gid(), description:g('fDesc'), amount:amt, category:g('fCat').toLowerCase(), date: new Date().toISOString().slice(0,10)});
+        FinancialEngine.processEvent({type:'EXPENSE', amount:amt});
+    } else if (type === 'income') {
+        const amt = gn('fAmount'); if (!amt) { StorageEngine.showToast('Amount required'); return; }
+        app.income.unshift({id:gid(), source:g('fSource'), amount:amt, date: new Date().toISOString().slice(0,10)});
+        FinancialEngine.processEvent({type:'INCOME', amount:amt});
+    } else if (type === 'debt') {
+        const rid = g('fDebtCustomer'); const amt = gn('fAmount');
+        if (!rid || !amt) { StorageEngine.showToast('Select customer and enter amount'); return; }
+        const r = app.receivablesList.find(x => x.id === rid);
+        if (r) { r.paidAmount = (r.paidAmount||0) + amt; r.remainingAmount = r.totalAmount - r.paidAmount; r.status = r.remainingAmount <= 0 ? 'Paid' : 'Partial'; }
+        FinancialEngine.processEvent({type:'DEBT_PAYMENT', amount:amt});
+    }
+    saveApp(); closeModal(); renderPulse();
+    try { StorageEngine.showToast('✅ Saved'); } catch(e) {}
+}
+
+// ==========================================
+// DECISION FORM
+// ==========================================
+function openDecisionForm() {
+    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
+    if (!m || !c) return;
+    c.innerHTML = '<div class="flex-between mb-3"><h3 class="font-bold">🎯 Log a Decision</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div><label>What are you buying?</label><input type="text" id="dTitle"><label class="mt-2">Why?</label><select id="dReason"><option>High demand</option><option>Customer request</option><option>Low price</option><option>Emotional</option><option>Restocking</option></select><div class="grid-2 mt-2"><div><label>Cost</label><input type="number" id="dCost"></div><div><label>Expected Profit</label><input type="number" id="dProfit"></div></div><label class="mt-2">Decision</label><div class="chip-row" id="dFinal"><span class="chip active" onclick="setD(\'BUY\')">🟢 BUY</span><span class="chip" onclick="setD(\'WAIT\')">🟡 WAIT</span><span class="chip" onclick="setD(\'REJECT\')">🔴 REJECT</span></div><button class="btn btn-primary mt-3" onclick="saveDecision()">Save</button>';
+    m.style.display = 'flex';
+}
+function setD(v) { document.querySelectorAll('#dFinal .chip').forEach(c => c.classList.remove('active')); const b = document.querySelector('#dFinal .chip[onclick="setD(\''+v+'\')"]'); if(b) b.classList.add('active'); }
+function saveDecision() {
+    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+    const fe = document.querySelector('#dFinal .chip.active'); const fd = fe ? fe.textContent.replace(/[🟢🟡🔴]/g,'').trim() : 'WAIT';
+    app.decisions.unshift({id:gid(), title:g('dTitle'), reason:g('dReason'), capitalRequired:Number(document.getElementById('dCost')?.value)||0, expectedProfit:Number(document.getElementById('dProfit')?.value)||0, finalDecision:fd, status:'pending', date: new Date().toISOString().slice(0,10)});
+    saveApp(); closeModal(); StorageEngine.showToast('✅ Decision logged');
+}
+
+// ==========================================
+// RECORDS
+// ==========================================
+let recordsTab = 'inventory';
+function switchRecordsTab(tab) {
+    recordsTab = tab;
+    document.querySelectorAll('#recordsTabs .chip').forEach(c => c.classList.remove('active'));
+    const ac = document.querySelector('#recordsTabs .chip[onclick="switchRecordsTab(\''+tab+'\')"]'); if(ac) ac.classList.add('active');
+    let items = [];
+    if (tab === 'inventory') items = app.inventory.map(i => ({t:i.product+' (Qty:'+(i.quantity||1)+')', m:'Cost:'+fm(i.cost)+' · Sell:'+fm(i.sellPrice)+' · '+i.status, b:i.status==='Active'?'badge-blue':'badge-green'}));
+    else if (tab === 'deals') items = app.deals.map(d => ({t:(d.customer||'Sale')+' — '+d.product, m:fm(d.sellPrice)+' · '+d.status, b:d.status==='Closed'?'badge-green':'badge-blue'}));
+    else if (tab === 'expenses') items = app.expenses.map(e => ({t:e.description+' -'+fm(e.amount), m:e.category, b:'badge-red'}));
+    else if (tab === 'income') items = app.income.map(i => ({t:i.source+' +'+fm(i.amount), m:i.date, b:'badge-green'}));
+    else if (tab === 'debts') items = app.receivablesList.map(r => ({t:r.customer+' — Owes '+fm(r.remainingAmount), m:'Paid:'+fm(r.paidAmount)+' / '+fm(r.totalAmount), b:r.status==='Paid'?'badge-green':'badge-amber'}));
+    try { document.getElementById('recordsList').innerHTML = items.length ? items.map(i => '<div class="row-item"><div class="flex-between"><span class="rt">'+i.t+'</span><span class="badge '+i.b+'">'+i.m.split('·')[0].trim()+'</span></div><div class="rm">'+i.m+'</div></div>').join('') : '<p class="text-xs text-gray text-center">No records</p>'; } catch(e) {}
+}
+
+// ==========================================
+// YOU
+// ==========================================
+function renderYou() {
+    try {
+        const n = document.getElementById('backupNote');
+        if (!app.meta.lastBackup) n.textContent = '⚠ No backup yet.';
+        else { const d = Math.floor((Date.now() - new Date(app.meta.lastBackup).getTime()) / 86400000); n.textContent = d > 7 ? '⚠ Last backup: ' + d + ' days ago' : '✅ Backed up ' + d + ' days ago'; }
+    } catch(e) {}
+}
+function openReviewForm() {
+    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
+    if (!m || !c) return;
+    c.innerHTML = '<div class="flex-between mb-3"><h3 class="font-bold">Weekly Review</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div><label>✅ What Worked</label><textarea id="rWorked" rows="2"></textarea><label class="mt-2">❌ What Failed</label><textarea id="rFailed" rows="2"></textarea><label class="mt-2">💰 What Leaked</label><textarea id="rLeaked" rows="2"></textarea><label class="mt-2">🔧 What to Improve</label><textarea id="rImprove" rows="2"></textarea><button class="btn btn-primary mt-3" onclick="saveReview()">Save Review</button>';
+    m.style.display = 'flex';
+}
+function saveReview() {
+    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+    app.reviews.unshift({id:gid(), date: new Date().toISOString().slice(0,10), whatWorked:g('rWorked'), whatFailed:g('rFailed'), whatLeaked:g('rLeaked'), whatImprove:g('rImprove')});
+    saveApp(); closeModal(); StorageEngine.showToast('✅ Review saved');
+}
+
+// ==========================================
+// IMPORT / EXPORT
+// ==========================================
+function exportData() { StorageEngine.exportData(); renderYou(); StorageEngine.showToast('📥 Exported'); }
+function importData(e) {
+    const file = e.target.files[0]; if (!file) return;
+    StorageEngine.importData(file, function(data) {
+        if (confirm('Replace all current data with this backup?')) {
+            app = data;
+            if (!app.income) app.income = [];
+            if (!app.receivablesList) app.receivablesList = [];
+            if (!app.decisions) app.decisions = [];
+            saveApp(); renderPulse(); switchRecordsTab(recordsTab); renderYou();
+            StorageEngine.showToast('📤 Imported');
+        }
+    });
+    e.target.value = '';
+}
+function resetAll() {
+    if (confirm('Delete ALL data? This cannot be undone.')) {
+        app = getDefaultApp(); saveApp(); renderPulse(); switchRecordsTab('inventory'); renderYou();
+        StorageEngine.showToast('🗑 Reset');
+    }
+}
+
+// ==========================================
+// STREAK TRACKING
+// ==========================================
+function updateStreak() {
+    const today = new Date().toISOString().slice(0,10);
+    if (app.meta.lastActive === today) return;
+    if (app.meta.lastActive) {
+        const last = new Date(app.meta.lastActive); const now = new Date(today);
+        const diff = Math.floor((now - last) / 86400000);
+        app.meta.streak = diff === 1 ? (app.meta.streak||0) + 1 : 1;
+    } else { app.meta.streak = 1; }
+    app.meta.lastActive = today;
+    saveApp();
+    try { document.getElementById('streakBadge').textContent = '🔥 ' + (app.meta.streak||0) + ' days'; } catch(e) {}
+}
+updateStreak();
+
+// ==========================================
+// INIT
+// ==========================================
+function renderAll() { renderPulse(); switchRecordsTab('inventory'); renderYou(); }
+renderAll(); showPage('pulse');
 </script>
 </body>
 </html>
