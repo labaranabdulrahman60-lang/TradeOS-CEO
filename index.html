@@ -2,596 +2,1076 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="manifest" href="manifest.json">
-    <title>TradeOS V1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Estates Nigeria | Luxury Property Showroom</title>
+    <meta name="description" content="Verified luxury property listings in Lagos, Abuja & Port Harcourt. CAC registered. Trusted real estate agents.">
     <style>
-        :root{--bg:#080c12;--surface:#0f1419;--surface2:#161c24;--surface3:#1a2230;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--text:#e6edf3;--text2:#8b949e;--text3:#6e7681;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--amber:#d2991d;--purple:#a371f7;--radius-sm:8px;--radius:12px;--radius-lg:16px;--font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;--transition:0.2s ease;}
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:var(--bg);color:var(--text);font-family:var(--font);max-width:500px;margin:0 auto;padding:0 0 100px 0;line-height:1.5;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-        header{position:sticky;top:0;z-index:30;background:rgba(8,12,18,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
-        header h1{font-size:1.2rem;font-weight:700;letter-spacing:-0.3px;}header h1 span{color:var(--blue);}
-        header .streak-badge{background:rgba(210,153,29,0.15);color:var(--amber);padding:4px 10px;border-radius:20px;font-size:0.7rem;font-weight:700;}
-        .page{display:none;padding:16px;animation:fadeIn 0.25s ease;}.page.active{display:block;}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
-        .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-        .kpi{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;}.kpi .val{font-size:1.4rem;font-weight:700;}.kpi .lbl{font-size:0.65rem;color:var(--text2);text-transform:uppercase;margin-top:4px;}
-        .btn{display:block;width:100%;padding:14px;border-radius:var(--radius-sm);border:none;font-weight:600;font-size:0.85rem;cursor:pointer;text-align:center;transition:var(--transition);font-family:var(--font);}.btn:active{transform:scale(0.97);}
-        .btn-primary{background:var(--blue);color:#fff;}.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}.btn-danger{background:rgba(248,81,73,0.15);color:var(--red);}
-        .btn-small{display:inline-block;width:auto;padding:8px 14px;font-size:0.75rem;border-radius:8px;}
-        .btn-xl{display:flex;align-items:center;gap:8px;padding:16px;border-radius:var(--radius);font-size:0.9rem;margin-bottom:10px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);cursor:pointer;width:100%;font-family:var(--font);text-align:left;}.btn-xl:active{background:var(--surface3);}.btn-xl .icon{font-size:1.3rem;}
-        input,select,textarea{width:100%;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:0.85rem;font-family:var(--font);-webkit-appearance:none;}input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);}
-        label{display:block;font-size:0.7rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-        .badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:0.65rem;font-weight:700;}.badge-green{background:rgba(63,185,80,0.15);color:var(--green);}.badge-red{background:rgba(248,81,73,0.15);color:var(--red);}.badge-blue{background:rgba(88,166,255,0.15);color:var(--blue);}.badge-amber{background:rgba(210,153,29,0.15);color:var(--amber);}
-        .row-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;cursor:pointer;}.row-item:active{background:var(--surface);}.row-item .rt{font-weight:600;font-size:0.9rem;}.row-item .rm{font-size:0.7rem;color:var(--text2);margin-top:3px;}
-        .flex-between{display:flex;justify-content:space-between;align-items:center;}.flex-row{display:flex;gap:8px;align-items:center;}
-        .mt-1{margin-top:4px;}.mt-2{margin-top:8px;}.mt-3{margin-top:12px;}.mt-4{margin-top:16px;}.mb-2{margin-bottom:8px;}.mb-3{margin-bottom:12px;}
-        .text-green{color:var(--green);}.text-red{color:var(--red);}.text-blue{color:var(--blue);}.text-amber{color:var(--amber);}.text-gray{color:var(--text2);}.text-xs{font-size:0.7rem;}.text-sm{font-size:0.8rem;}.text-lg{font-size:1.1rem;}.text-xl{font-size:1.5rem;}.font-bold{font-weight:700;}.text-center{text-align:center;}
-        .chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}.chip{padding:6px 12px;border-radius:16px;font-size:0.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);}.chip.active{background:var(--blue);color:#fff;border-color:var(--blue);}
-        .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);padding:12px 20px;border-radius:20px;font-size:0.8rem;font-weight:600;z-index:50;pointer-events:none;opacity:0;transition:opacity 0.3s;}.toast.show{opacity:1;}
-        .modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:40;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}.modal-content{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:20px;width:100%;max-width:460px;margin-top:10px;}
-        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-        .section-title{font-size:0.75rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-        .insight-card{background:var(--surface2);border-left:3px solid var(--blue);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 14px;margin-bottom:8px;}.insight-card.warning{border-left-color:var(--amber);}.insight-card.danger{border-left-color:var(--red);}.insight-card.success{border-left-color:var(--green);}
-        .leaderboard-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}.leaderboard-item:last-child{border-bottom:none;}.leaderboard-item .rank{font-size:1.2rem;font-weight:800;width:30px;}.leaderboard-item .info{flex:1;}.leaderboard-item .profit{font-weight:700;color:var(--green);}
-        hr{border:none;border-top:1px solid var(--border);margin:12px 0;}
-        nav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 4px 14px 4px;z-index:20;max-width:500px;margin:0 auto;}
-        nav button{background:none;border:none;color:var(--text3);font-size:0.55rem;font-weight:600;cursor:pointer;padding:4px 2px;border-radius:6px;display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;}nav button.active{color:var(--blue);}nav button svg{width:20px;height:20px;}
+        :root {
+            --navy: #0B1F3A;
+            --navy-light: #1A3A5C;
+            --gold: #C9A227;
+            --gold-light: #E5C765;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E8E8E8;
+            --gray-300: #D4D4D4;
+            --text-heading: #0B1F3A;
+            --text-body: #555555;
+            --shadow-sm: 0 1px 3px rgba(11,31,58,0.06);
+            --shadow-md: 0 8px 24px rgba(11,31,58,0.08);
+            --shadow-lg: 0 20px 40px rgba(11,31,58,0.12);
+            --shadow-xl: 0 30px 60px rgba(11,31,58,0.15);
+            --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--font); background: var(--white); color: var(--text-body); line-height: 1.6; overflow-x: hidden; }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+        /* ========== NAVIGATION ========== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(11, 31, 58, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            transition: all var(--transition);
+        }
+        .navbar.scrolled {
+            height: 70px;
+            box-shadow: 0 4px 30px rgba(11,31,58,0.4);
+        }
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            gap: 2rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+        .brand-mark {
+            width: 45px;
+            height: 45px;
+            background: var(--gold);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+        }
+        .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+        .brand-name { color: var(--white); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; }
+        .brand-tag { color: var(--gold); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .navbar-menu a {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color var(--transition);
+        }
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width var(--transition);
+        }
+        .navbar-menu a:hover { color: var(--gold); }
+        .navbar-menu a:hover::after { width: 100%; }
+
+        .navbar-cta {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .navbar-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(201,162,39,0.4);
+        }
+
+        .navbar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .navbar-toggle span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--white);
+            margin: 5px 0;
+            transition: all var(--transition);
+        }
+
+        @media (max-width: 968px) {
+            .navbar-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                max-width: 320px;
+                height: calc(100vh - 80px);
+                background: var(--navy);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s;
+                box-shadow: -10px 0 30px rgba(11,31,58,0.5);
+            }
+            .navbar-menu.active { right: 0; }
+            .navbar-toggle { display: block; }
+        }
+        @media (max-width: 768px) {
+            .navbar { height: 70px; }
+            .navbar-menu { top: 70px; height: calc(100vh - 70px); }
+            .brand-mark { width: 38px; height: 38px; font-size: 1.1rem; }
+            .brand-name { font-size: 1rem; }
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--navy);
+            margin-top: 0;
+            padding-top: 80px;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80');
+            background-size: cover;
+            background-position: center right;
+            background-repeat: no-repeat;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(11,31,58,0.95) 0%, rgba(11,31,58,0.75) 40%, rgba(11,31,58,0.3) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 620px;
+            padding: 4rem 0;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(201,162,39,0.15);
+            border: 1px solid rgba(201,162,39,0.4);
+            padding: 0.45rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--gold-light);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.8rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 2px solid transparent;
+        }
+        .btn-gold { background: var(--gold); color: var(--navy); }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,162,39,0.4); }
+        .btn-whatsapp { background: #25D366; color: var(--white); }
+        .btn-whatsapp:hover { background: #1EBE57; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,211,102,0.4); }
+
+        @media (max-width: 768px) {
+            .hero { min-height: 80vh; }
+            .hero-bg { background-position: 70% center; }
+            .hero-overlay { background: linear-gradient(180deg, rgba(11,31,58,0.85) 0%, rgba(11,31,58,0.95) 100%); }
+            .hero-content { text-align: center; padding: 3rem 0; }
+            .hero-buttons { justify-content: center; }
+        }
+
+        /* ========== TRUST BAR ========== */
+        .trust-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 2rem 0;
+        }
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .trust-item {
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .trust-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--gold);
+            margin: 0 auto 0.6rem;
+        }
+        .trust-item h4 { font-size: 0.95rem; color: var(--text-heading); margin-bottom: 0.2rem; }
+        .trust-item p { font-size: 0.78rem; color: var(--text-body); }
+        @media (max-width: 768px) {
+            .trust-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+        }
+
+        /* ========== SECTION ========== */
+        .section { padding: 5rem 0; }
+        .section-header { text-align: center; max-width: 650px; margin: 0 auto 3rem; }
+        .section-label { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 700; color: var(--gold); }
+        .section-title { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--text-heading); margin: 0.5rem 0 0.8rem; }
+        .section-subtitle { color: var(--text-body); font-size: 1rem; }
+
+        /* ========== LISTINGS ========== */
+        .listings { background: var(--off-white); }
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .property-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .property-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+        }
+        .property-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: var(--gray-200);
+        }
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+        .property-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .property-tag.rent { background: #25D366; color: white; }
+        .property-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+        .property-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 0.4rem;
+        }
+        .property-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.3rem;
+        }
+        .property-location {
+            font-size: 0.85rem;
+            color: var(--text-body);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .property-features {
+            display: flex;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1rem;
+            font-size: 0.82rem;
+            color: var(--text-body);
+        }
+        .property-features span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .property-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: auto;
+        }
+        .btn-sm {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-align: center;
+            transition: all var(--transition);
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .btn-wa-sm { background: #25D366; color: white; }
+        .btn-wa-sm:hover { background: #1EBE57; }
+        .btn-view-sm { background: var(--navy); color: white; }
+        .btn-view-sm:hover { background: var(--navy-light); }
+
+        @media (max-width: 1024px) {
+            .listings-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .listings-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== ABOUT ========== */
+        .about { background: var(--white); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-content h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); color: var(--text-heading); margin-bottom: 1rem; font-weight: 700; }
+        .about-content p { margin-bottom: 1.2rem; font-size: 1rem; }
+        .cac-box {
+            background: var(--off-white);
+            border-left: 4px solid var(--gold);
+            padding: 1.2rem 1.5rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+        .cac-box strong { color: var(--navy); display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+        .cac-box span { font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; }
+        .about-image {
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-image { height: 280px; }
+        }
+
+        /* ========== SERVICES ========== */
+        .services { background: var(--navy); }
+        .services .section-title { color: var(--white); }
+        .services .section-subtitle { color: rgba(255,255,255,0.7); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .service-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(201,162,39,0.25);
+            border-radius: 8px;
+            padding: 2rem 1.5rem;
+            transition: all var(--transition);
+        }
+        .service-card:hover {
+            background: rgba(201,162,39,0.1);
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+        .service-icon { width: 45px; height: 45px; color: var(--gold); margin-bottom: 1rem; }
+        .service-card h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.6rem; }
+        .service-card p { color: rgba(255,255,255,0.7); font-size: 0.88rem; }
+
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .services-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials { background: var(--off-white); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .testimonial {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+        .stars { color: var(--gold); margin-bottom: 1rem; font-size: 1.1rem; letter-spacing: 0.1em; }
+        .testimonial p { font-style: italic; margin-bottom: 1.5rem; color: var(--text-body); }
+        .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .author-info strong { display: block; color: var(--text-heading); font-size: 0.92rem; }
+        .author-info span { font-size: 0.8rem; color: var(--text-body); }
+
+        @media (max-width: 1024px) {
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== CONTACT ========== */
+        .contact { background: var(--white); }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .contact-info h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); color: var(--text-heading); margin-bottom: 1rem; font-weight: 700; }
+        .contact-info > p { margin-bottom: 1.5rem; }
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+        .contact-item-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--off-white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .contact-item strong { color: var(--text-heading); display: block; margin-bottom: 0.2rem; font-size: 0.9rem; }
+        .contact-item span { color: var(--text-body); font-size: 0.92rem; }
+
+        .contact-form {
+            background: var(--off-white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            border-top: 4px solid var(--gold);
+        }
+        .form-title { font-size: 1.3rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1.5rem; text-align: center; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.35rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: var(--font);
+            transition: all var(--transition);
+            background: var(--white);
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-top: 0.5rem;
+        }
+        .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,162,39,0.4); }
+
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .contact-form { padding: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        /* ========== CTA BANNER ========== */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+        .cta-banner h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 1rem; }
+        .cta-banner p { color: rgba(255,255,255,0.8); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ========== FOOTER ========== */
+        .footer { background: var(--navy); color: rgba(255,255,255,0.75); padding: 4rem 0 1.5rem; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-brand h3 { color: var(--white); font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .footer-brand p { font-style: italic; font-size: 0.88rem; color: rgba(255,255,255,0.6); }
+        .footer h4 { color: var(--white); font-size: 0.95rem; margin-bottom: 1rem; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: rgba(255,255,255,0.7); font-size: 0.85rem; transition: color var(--transition); }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-contact p { font-size: 0.85rem; margin-bottom: 0.4rem; }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            width: 55px;
+            height: 55px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+            transition: all var(--transition);
+            animation: waPulse 3s ease-in-out infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float svg { width: 30px; height: 30px; color: white; }
+        @keyframes waPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 4px 35px rgba(37,211,102,0.8); }
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 50px; height: 50px; bottom: 18px; right: 18px; }
+        }
     </style>
 </head>
 <body>
-<header><h1><span>Trade</span>OS</h1><span class="streak-badge" id="streakBadge">🔥 0 days</span></header>
-<div class="toast" id="toast"></div>
 
-<!-- PULSE -->
-<div class="page active" id="page-pulse">
-    <div class="card"><div class="section-title">📊 Financial Position</div>
-        <div class="kpi-grid">
-            <div class="kpi"><div class="val" id="pulseNW">₦0</div><div class="lbl">Net Worth</div></div>
-            <div class="kpi"><div class="val" id="pulseCash">₦0</div><div class="lbl">Cash</div></div>
-            <div class="kpi"><div class="val" id="pulseInventory">₦0</div><div class="lbl">Inventory</div></div>
-            <div class="kpi"><div class="val" id="pulseReceivables">₦0</div><div class="lbl">Receivables</div></div>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+        <div class="brand">
+            <div class="brand-mark">PE</div>
+            <div class="brand-text">
+                <span class="brand-name">Prime Estates</span>
+                <span class="brand-tag">Lagos • Abuja</span>
+            </div>
         </div>
-    </div>
-    <div class="card"><div class="section-title">📈 This Month</div>
-        <div class="kpi-grid">
-            <div class="kpi"><div class="val text-green" id="pulseRev">₦0</div><div class="lbl">Revenue</div></div>
-            <div class="kpi"><div class="val text-red" id="pulseExp">₦0</div><div class="lbl">Expenses</div></div>
-            <div class="kpi"><div class="val" id="pulseNet">₦0</div><div class="lbl">Net Profit</div></div>
-            <div class="kpi"><div class="val" id="pulseScore">-</div><div class="lbl">Health Score</div></div>
+        <div class="navbar-menu" id="navbarMenu">
+            <a href="#home">Home</a>
+            <a href="#listings">Listings</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="#contact" class="navbar-cta">Book Inspection</a>
         </div>
+        <button class="navbar-toggle" id="navbarToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
-    <div class="card"><div class="section-title">🧠 Strategic Recommendations</div><div id="strategyPanel"><p class="text-xs text-gray">Log data to get recommendations</p></div></div>
-    <div class="card"><div class="section-title">🚨 Leak Detector</div><div id="leakPanel"><p class="text-xs text-gray">Log expenses to see leaks</p></div></div>
-    <div class="card"><div class="section-title">🏆 Product Leaderboard</div><div id="leaderboard"><p class="text-xs text-gray">No sales yet</p></div></div>
-</div>
-
-<!-- LOG -->
-<div class="page" id="page-log">
-    <h2 class="text-lg font-bold mb-3">Quick Log</h2>
-    <button class="btn-xl" onclick="openLogForm('sale')"><span class="icon">💰</span> Sold Something</button>
-    <button class="btn-xl" onclick="openLogForm('stock')"><span class="icon">📦</span> Bought Stock</button>
-    <button class="btn-xl" onclick="openLogForm('expense')"><span class="icon">💸</span> Spent Money</button>
-    <button class="btn-xl" onclick="openLogForm('income')"><span class="icon">📥</span> Received Money</button>
-    <button class="btn-xl" onclick="openLogForm('debt')"><span class="icon">📋</span> Customer Paid Debt</button>
-    <button class="btn-xl" onclick="openDecisionForm()"><span class="icon">🎯</span> Log a Decision</button>
-</div>
-
-<!-- RECORDS -->
-<div class="page" id="page-records">
-    <div class="chip-row" id="recordsTabs">
-        <span class="chip active" onclick="switchRecordsTab('inventory')">📦 Stock</span>
-        <span class="chip" onclick="switchRecordsTab('deals')">🤝 Deals</span>
-        <span class="chip" onclick="switchRecordsTab('expenses')">💸 Costs</span>
-        <span class="chip" onclick="switchRecordsTab('income')">📥 Income</span>
-        <span class="chip" onclick="switchRecordsTab('debts')">📋 Debts</span>
-    </div>
-    <div id="recordsList"></div>
-</div>
-
-<!-- YOU -->
-<div class="page" id="page-you">
-    <div class="card text-center"><div style="font-size:3rem;">👤</div><div class="text-lg font-bold">Entrepreneur</div></div>
-    <button class="btn btn-secondary mt-2" onclick="openReviewForm()">📝 Weekly Review</button>
-    <button class="btn btn-secondary mt-2" onclick="exportData()">📥 Export Backup</button>
-    <button class="btn btn-secondary mt-2" onclick="document.getElementById('importFile').click()">📤 Import Backup</button>
-    <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
-    <button class="btn btn-danger mt-2" onclick="resetAll()">🗑 Reset All Data</button>
-    <p class="text-xs text-gray text-center mt-3" id="backupNote"></p>
-</div>
-
-<div class="modal" id="genericModal" style="display:none;"><div class="modal-content" id="modalContent"></div></div>
-
-<nav id="mainNav">
-    <button class="active" data-page="pulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Pulse</button>
-    <button data-page="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Log</button>
-    <button data-page="records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/></svg>Records</button>
-    <button data-page="you"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>You</button>
 </nav>
 
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">CAC Registered • Verified Listings</div>
+            <h1 class="hero-title">Find Your Dream Property in Lagos & Abuja</h1>
+            <p class="hero-subtitle">Verified luxury homes, land, and commercial properties. Trusted by over 500 families. Every listing inspected before it goes live.</p>
+            <div class="hero-buttons">
+                <a href="#listings" class="btn btn-gold">Browse Listings</a>
+                <a href="https://wa.me/2348012345678?text=Hello%20Prime%20Estates%2C%20I%20am%20interested%20in%20your%20properties" target="_blank" class="btn btn-whatsapp">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+    <div class="container">
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+                <h4>CAC Registered</h4>
+                <p>Fully verified business</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <h4>500+ Families</h4>
+                <p>Served across Nigeria</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                <h4>Lagos & Abuja</h4>
+                <p>Prime locations only</p>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                <h4>Flexible Payment</h4>
+                <p>Installment plans available</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LISTINGS -->
+<section class="section listings" id="listings">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Featured Properties</span>
+            <h2 class="section-title">Available Listings</h2>
+            <p class="section-subtitle">Handpicked, verified properties in Nigeria's most desirable locations.</p>
+        </div>
+        <div class="listings-grid">
+            <!-- Property 1 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80" alt="5 Bedroom Detached Duplex in Lekki">
+                    <span class="property-tag">For Sale</span>
+                </div>
+                <div class="property-body">
+                    <div class="property-price">₦185,000,000</div>
+                    <h3 class="property-title">5 Bedroom Detached Duplex</h3>
+                    <p class="property-location">📍 Lekki Phase 1, Lagos</p>
+                    <div class="property-features">
+                        <span>🛏 5 Beds</span>
+                        <span>🚿 6 Baths</span>
+                        <span>🅿 4 Cars</span>
+                    </div>
+                    <div class="property-actions">
+                        <a href="https://wa.me/2348012345678?text=Hello%2C%20I%20am%20interested%20in%20the%205%20Bedroom%20Detached%20Duplex%20in%20Lekki%20Phase%201" target="_blank" class="btn-sm btn-wa-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Inquire
+                        </a>
+                        <button class="btn-sm btn-view-sm">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="4 Bedroom Terrace in Ikoyi">
+                    <span class="property-tag">For Sale</span>
+                </div>
+                <div class="property-body">
+                    <div class="property-price">₦120,000,000</div>
+                    <h3 class="property-title">4 Bedroom Semi-Detached</h3>
+                    <p class="property-location">📍 Ikoyi, Lagos</p>
+                    <div class="property-features">
+                        <span>🛏 4 Beds</span>
+                        <span>🚿 5 Baths</span>
+                        <span>🅿 3 Cars</span>
+                    </div>
+                    <div class="property-actions">
+                        <a href="https://wa.me/2348012345678?text=Hello%2C%20I%20am%20interested%20in%20the%204%20Bedroom%20Semi-Detached%20in%20Ikoyi" target="_blank" class="btn-sm btn-wa-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Inquire
+                        </a>
+                        <button class="btn-sm btn-view-sm">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="property-card">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" alt="3 Bedroom Flat in Abuja">
+                    <span class="property-tag rent">For Rent</span>
+                </div>
+                <div class="property-body">
+                    <div class="property-price">₦8,500,000<span style="font-size:0.85rem;font-weight:500;color:#666;">/year</span></div>
+                    <h3 class="property-title">3 Bedroom Luxury Flat</h3>
+                    <p class="property-location">📍 Maitama, Abuja</p>
+                    <div class="property-features">
+                        <span>🛏 3 Beds</span>
+                        <span>🚿 4 Baths</span>
+                        <span>🅿 2 Cars</span>
+                    </div>
+                    <div class="property-actions">
+                        <a href="https://wa.me/2348012345678?text=Hello%2C%20I%20am%20interested%20in%20the%203%20Bedroom%20Luxury%20Flat%20in%20Maitama" target="_blank" class="btn-sm btn-wa-sm">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Inquire
+                        </a>
+                        <button class="btn-sm btn-view-sm">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-content">
+                <span class="section-label">About Us</span>
+                <h2>Nigeria's Trusted Real Estate Partner</h2>
+                <p>Prime Estates is a fully registered real estate company helping families and investors find verified properties across Lagos and Abuja.</p>
+                <p>Every property we list is personally inspected by our team. We do not list properties we have not seen. This is how we protect you from fraud and give you confidence in every transaction.</p>
+                <div class="cac-box">
+                    <strong>CAC Registration Number</strong>
+                    <span>RC-1234567</span>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Prime Estates Office">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Our Services</span>
+            <h2 class="section-title">How We Help You</h2>
+            <p class="section-subtitle">More than listings — we guide you through every step.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+                <h3>Property Sales</h3>
+                <p>Verified homes, land, and commercial property in prime locations.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+                <h3>Property Management</h3>
+                <p>We manage your property and find reliable tenants for you.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg></div>
+                <h3>Land Documentation</h3>
+                <p>C of O, Governor's Consent, and title verification support.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                <h3>Property Inspection</h3>
+                <p>Book a physical or virtual inspection at your convenience.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                <h3>Flexible Payment</h3>
+                <p>Installment plans for qualified buyers. Talk to us about options.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                <h3>Free Consultation</h3>
+                <p>Not sure what to buy? Talk to our team. No obligation, no pressure.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Client Reviews</span>
+            <h2 class="section-title">What Our Clients Say</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"They showed me 4 properties in Lekki and helped me verify all the documents before I paid. I felt safe throughout the process."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AO</div>
+                    <div class="author-info">
+                        <strong>Adaeze Okafor</strong>
+                        <span>Bought 4-Bed in Lekki</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"I was in the UK and couldn't inspect the property. They did a video tour and handled everything. Very professional."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">TM</div>
+                    <div class="author-info">
+                        <strong>Tunde Martins</strong>
+                        <span>Bought Land in Abuja</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"The installment plan made it possible for me. I paid over 12 months and got my keys last month."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">CB</div>
+                    <div class="author-info">
+                        <strong>Chidinma Bassey</strong>
+                        <span>Bought 3-Bed in Ajah</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+    <div class="container">
+        <h2>Ready to Find Your Next Property?</h2>
+        <p>Book a free consultation. We'll help you find the right property and guide you through every step.</p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/2348012345678?text=Hello%20Prime%20Estates%2C%20I%20would%20like%20a%20free%20consultation" target="_blank" class="btn btn-whatsapp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Chat on WhatsApp
+            </a>
+            <a href="#listings" class="btn btn-gold">View Listings</a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <span class="section-label">Contact Us</span>
+                <h2>Book an Inspection</h2>
+                <p>Have a question about a property? Send us a message and we'll respond within 2 hours.</p>
+
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                        <strong>Office Address</strong>
+                        <span>12 Admiralty Way, Lekki Phase 1, Lagos</span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div>
+                        <strong>Phone / WhatsApp</strong>
+                        <span>+234 801 234 5678</span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </div>
+                    <div>
+                        <strong>Email</strong>
+                        <span>info@primeestates.ng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 class="form-title">Request an Inspection</h3>
+                <form id="inspectionForm" data-web2phone="form" data-public-key="YOUR_WEB2PHONE_KEY" data-endpoint="https://web2phone.co.uk/api/v1/submit/">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone / WhatsApp *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+234">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="property">Property of Interest *</label>
+                        <select id="property" name="property" required>
+                            <option value="">Select a property</option>
+                            <option>5 Bedroom Detached Duplex - Lekki Phase 1 (₦185M)</option>
+                            <option>4 Bedroom Semi-Detached - Ikoyi (₦120M)</option>
+                            <option>3 Bedroom Luxury Flat - Maitama, Abuja (₦8.5M/year)</option>
+                            <option>Other / Not sure yet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="3" placeholder="When would you like to inspect?"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Request Inspection</button>
+                    <p data-w2p-output style="display:none; padding:0.8rem; background:#f0fdf4; border:1px solid #86efac; border-radius:4px; color:#166534; font-size:0.85rem; margin-top:0.8rem;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Prime Estates Nigeria</h3>
+                <p>"Your trusted real estate partner."</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#listings">Listings</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>12 Admiralty Way, Lekki Phase 1</p>
+                <p>Lagos, Nigeria</p>
+                <p>+234 801 234 5678</p>
+                <p>info@primeestates.ng</p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 Prime Estates Nigeria. All rights reserved. CAC: RC-1234567</div>
+    </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/2348012345678?text=Hello%20Prime%20Estates%2C%20I%20am%20interested%20in%20your%20properties" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="https://web2phone.co.uk/static/formsapp/js/embed.js"></script>
 <script>
-// ==========================================
-// ENGINE 1: STORAGE ENGINE
-// ==========================================
-const STORAGE_KEY = 'tradeos_v2_engine';
-const StorageEngine = {
-    load() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) return JSON.parse(raw);
-        } catch(e) { console.error('Storage load failed', e); }
-        return null;
-    },
-    save(data) {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch(e) {
-            this.showToast('⚠ Storage full. Export your data.');
-        }
-    },
-    exportData() {
-        const blob = new Blob([JSON.stringify(app)], {type:'application/json'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'tradeos_backup_' + new Date().toISOString().slice(0,10) + '.json';
-        a.click();
-        app.meta.lastBackup = new Date().toISOString();
-        StorageEngine.save(app);
-    },
-    importData(file, callback) {
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-            try {
-                const data = JSON.parse(ev.target.result);
-                if (data.capital && data.inventory && data.deals && data.expenses) {
-                    callback(data);
-                } else {
-                    throw new Error('Invalid structure');
-                }
-            } catch(e) {
-                alert('❌ Invalid file. Please use a TradeOS backup file.');
-            }
-        };
-        reader.readAsText(file);
-    },
-    showToast(msg) {
-        const t = document.getElementById('toast');
-        if(!t) return;
-        t.textContent = msg;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 2000);
-    }
-};
+    // Navbar toggle
+    const navbarToggle = document.getElementById('navbarToggle');
+    const navbarMenu = document.getElementById('navbarMenu');
+    const navbar = document.getElementById('navbar');
 
-// ==========================================
-// DEFAULT DATA
-// ==========================================
-function getDefaultApp() {
-    return {
-        capital: {cash:0, emergencyFund:0, inventoryValue:0, receivables:0, otherAssets:0, payables:0, liabilities:0},
-        capitalHistory: [],
-        inventory: [],
-        deals: [],
-        expenses: [],
-        income: [],
-        receivablesList: [],
-        decisions: [],
-        reviews: [],
-        achievements: [],
-        meta: {lastBackup:null, version:'2.0', streak:0, lastActive:null, totalDeals:0, lifetimeProfit:0}
-    };
-}
-
-// ==========================================
-// INITIALIZE APP
-// ==========================================
-let app = StorageEngine.load() || getDefaultApp();
-if (!app.income) app.income = [];
-if (!app.receivablesList) app.receivablesList = [];
-if (!app.decisions) app.decisions = [];
-if (!app.achievements) app.achievements = [];
-if (!app.meta) app.meta = {streak:0, lastActive:null, totalDeals:0, lifetimeProfit:0};
-
-function saveApp() { StorageEngine.save(app); }
-function fm(n) { return '₦' + Number(n).toLocaleString(); }
-function gid() { return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2,6); }
-
-// ==========================================
-// ENGINE 2: FINANCIAL ENGINE
-// ==========================================
-const FinancialEngine = {
-    processEvent(event) {
-        switch(event.type) {
-            case 'SALE_PAID':
-                app.capital.cash = (app.capital.cash || 0) + (event.sellPrice || 0);
-                app.meta.totalDeals = (app.meta.totalDeals || 0) + 1;
-                app.meta.lifetimeProfit = (app.meta.lifetimeProfit || 0) + ((event.sellPrice||0) - (event.buyPrice||0));
-                break;
-            case 'SALE_PENDING':
-                app.capital.receivables = (app.capital.receivables || 0) + (event.sellPrice || 0);
-                break;
-            case 'STOCK_PURCHASE':
-                app.capital.cash = (app.capital.cash || 0) - ((event.cost||0) * (event.quantity||1));
-                break;
-            case 'EXPENSE':
-                app.capital.cash = (app.capital.cash || 0) - (event.amount || 0);
-                break;
-            case 'INCOME':
-                app.capital.cash = (app.capital.cash || 0) + (event.amount || 0);
-                break;
-            case 'DEBT_PAYMENT':
-                app.capital.cash = (app.capital.cash || 0) + (event.amount || 0);
-                app.capital.receivables = Math.max(0, (app.capital.receivables||0) - (event.amount||0));
-                break;
-        }
-        this.updateInventoryValue();
-        this.takeSnapshot();
-    },
-    updateInventoryValue() {
-        app.capital.inventoryValue = app.inventory
-            .filter(i => i.status === 'Active')
-            .reduce((s, i) => s + ((i.cost||0) * (i.quantity||1)), 0);
-    },
-    takeSnapshot() {
-        const today = new Date().toISOString().slice(0,10);
-        const last = app.capitalHistory[app.capitalHistory.length - 1];
-        if (!last || last.date !== today) {
-            app.capitalHistory.push({
-                date: today,
-                netWorth: this.getNetWorth(),
-                cash: app.capital.cash,
-                inventoryValue: app.capital.inventoryValue,
-                receivables: app.capital.receivables
-            });
-        }
-    },
-    getNetWorth() {
-        return (app.capital.cash||0) + (app.capital.emergencyFund||0) + (app.capital.inventoryValue||0) + 
-               (app.capital.receivables||0) + (app.capital.otherAssets||0) - (app.capital.payables||0) - (app.capital.liabilities||0);
-    },
-    getRevenue(month) {
-        return app.deals.filter(d => d.date && d.date.startsWith(month) && d.status === 'Closed')
-            .reduce((s, d) => s + (d.profit||0), 0);
-    },
-    getExpenses(month) {
-        return app.expenses.filter(e => e.date && e.date.startsWith(month))
-            .reduce((s, e) => s + (e.amount||0), 0);
-    },
-    getMonthlyROI() {
-        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-        const exp = this.getExpenses(tm);
-        if (exp === 0) return 0;
-        return Math.round(((this.getRevenue(tm) - exp) / exp) * 100);
-    },
-    getCashRunway() {
-        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-        const monthlyExp = this.getExpenses(tm);
-        if (monthlyExp === 0 || !app.capital.cash) return 999;
-        return Math.round(app.capital.cash / (monthlyExp / 30));
-    }
-};
-
-// ==========================================
-// ENGINE 3: INVENTORY ENGINE
-// ==========================================
-const InventoryEngine = {
-    getActiveProducts() { return app.inventory.filter(i => i.status === 'Active'); },
-    getSoldProducts() { return app.inventory.filter(i => i.status === 'Sold'); },
-    getProductProfit(productName) {
-        return app.deals.filter(d => d.product === productName && d.status === 'Closed')
-            .reduce((s, d) => s + (d.profit||0), 0);
-    },
-    getProfitByProduct() {
-        const map = {};
-        app.deals.filter(d => d.status === 'Closed').forEach(d => {
-            const k = d.product || 'Uncategorized';
-            map[k] = (map[k] || 0) + (d.profit||0);
-        });
-        return map;
-    },
-    getTopProducts(limit = 5) {
-        return Object.entries(this.getProfitByProduct())
-            .sort((a, b) => b[1] - a[1]).slice(0, limit)
-            .map(([name, profit]) => ({name, profit}));
-    }
-};
-
-// ==========================================
-// ENGINE 4: CUSTOMER ENGINE
-// ==========================================
-const CustomerEngine = {
-    getCustomerHistory(name) { return app.deals.filter(d => d.customer === name); },
-    getLifetimeProfit(name) { return this.getCustomerHistory(name).filter(d => d.status === 'Closed').reduce((s, d) => s + (d.profit||0), 0); },
-    getTopCustomers(limit = 3) {
-        const map = {};
-        app.deals.filter(d => d.status === 'Closed').forEach(d => {
-            const k = d.customer || 'Unknown';
-            map[k] = (map[k] || 0) + 1;
-        });
-        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, limit).map(([name, count]) => ({name, count}));
-    }
-};
-
-// ==========================================
-// ENGINE 5: ANALYTICS ENGINE
-// ==========================================
-const AnalyticsEngine = {
-    generateMetrics() {
-        const now = new Date(); const tm = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-        return {
-            netWorth: FinancialEngine.getNetWorth(),
-            revenue: FinancialEngine.getRevenue(tm),
-            expenses: FinancialEngine.getExpenses(tm),
-            monthlyROI: FinancialEngine.getMonthlyROI(),
-            cashRunway: FinancialEngine.getCashRunway(),
-            topProducts: InventoryEngine.getTopProducts(5),
-            topCustomers: CustomerEngine.getTopCustomers(3),
-            profitByProduct: InventoryEngine.getProfitByProduct(),
-            cash: app.capital.cash,
-            inventoryValue: app.capital.inventoryValue,
-            receivables: app.capital.receivables,
-            lifetimeProfit: app.meta.lifetimeProfit || 0,
-            totalDeals: app.deals.filter(d => d.status === 'Closed').length,
-            totalDecisions: app.decisions.length,
-            totalReviews: app.reviews.length
-        };
-    }
-};
-
-// ==========================================
-// ENGINE 6: STRATEGY ENGINE
-// ==========================================
-const StrategyEngine = {
-    generateRecommendations(metrics) {
-        const recs = [];
-        if (metrics.topProducts.length > 0) {
-            recs.push({type:'success', msg:'🏆 <strong>' + metrics.topProducts[0].name + '</strong> is your best product. Allocate more capital here.'});
-        }
-        if (metrics.cashRunway < 14 && metrics.cashRunway > 0) {
-            recs.push({type:'danger', msg:'⚠ Only <strong>' + metrics.cashRunway + ' days</strong> of cash runway. Reduce expenses.'});
-        }
-        if (metrics.receivables > 0) {
-            recs.push({type:'warning', msg:'📋 <strong>' + fm(metrics.receivables) + '</strong> in unpaid receivables. Follow up.'});
-        }
-        if (!app.capital.emergencyFund) {
-            recs.push({type:'warning', msg:'🛡 No emergency fund. Set aside 10% of profit.'});
-        }
-        if (metrics.monthlyROI > 20) {
-            recs.push({type:'success', msg:'📈 Monthly ROI is <strong>' + metrics.monthlyROI + '%</strong>. Business is efficient.'});
-        }
-        if (metrics.totalReviews === 0) {
-            recs.push({type:'', msg:'📝 Write your first weekly review to build discipline.'});
-        }
-        return recs.length ? recs : [{type:'', msg:'Log more data to get strategic recommendations.'}];
-    }
-};
-
-// ==========================================
-// UI HELPERS
-// ==========================================
-function showPage(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('#mainNav button').forEach(b => b.classList.remove('active'));
-    const pg = document.getElementById('page-' + page); if(pg) pg.classList.add('active');
-    const btn = document.querySelector('#mainNav button[data-page="' + page + '"]'); if(btn) btn.classList.add('active');
-    if (page === 'pulse') renderPulse();
-    if (page === 'records') switchRecordsTab(recordsTab || 'inventory');
-    if (page === 'you') renderYou();
-}
-document.getElementById('mainNav').addEventListener('click', function(e) {
-    const b = e.target.closest('button'); if (b && b.dataset.page) showPage(b.dataset.page);
-});
-
-function renderPulse() {
-    const m = AnalyticsEngine.generateMetrics();
-    const recs = StrategyEngine.generateRecommendations(m);
-    try {
-        document.getElementById('pulseNW').textContent = fm(m.netWorth);
-        document.getElementById('pulseNW').style.color = m.netWorth >= 0 ? 'var(--green)' : 'var(--red)';
-        document.getElementById('pulseCash').textContent = fm(m.cash);
-        document.getElementById('pulseInventory').textContent = fm(m.inventoryValue);
-        document.getElementById('pulseReceivables').textContent = fm(m.receivables);
-        document.getElementById('pulseRev').textContent = '+'+fm(m.revenue);
-        document.getElementById('pulseExp').textContent = '-'+fm(m.expenses);
-        const net = m.revenue - m.expenses;
-        const ne = document.getElementById('pulseNet'); ne.textContent = (net>=0?'+':'')+fm(net); ne.style.color = net>=0?'var(--green)':'var(--red)';
-        document.getElementById('pulseScore').textContent = Math.max(0, Math.min(100, 50 + m.monthlyROI + (m.cash > 0 ? 10 : 0) + (m.receivables === 0 ? 10 : 0)));
-        document.getElementById('strategyPanel').innerHTML = recs.map(r => '<div class="insight-card ' + r.type + '">' + r.msg + '</div>').join('');
-        // Leak detector
-        const cats = {}; app.expenses.forEach(e => { cats[e.category] = (cats[e.category]||0) + (e.amount||0); });
-        const leaks = Object.entries(cats).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]).slice(0,3);
-        document.getElementById('leakPanel').innerHTML = leaks.length ? leaks.map(([k,v]) => '<div class="insight-card warning">🚨 <strong>' + k + '</strong>: ' + fm(v) + '</div>').join('') : '<p class="text-xs text-gray">Log expenses to see leaks</p>';
-        // Leaderboard
-        document.getElementById('leaderboard').innerHTML = m.topProducts.length ? m.topProducts.map((p,i) => '<div class="leaderboard-item"><span class="rank">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1))+'</span><div class="info"><span class="rt">'+p.name+'</span></div><span class="profit">+'+fm(p.profit)+'</span></div>').join('') : '<p class="text-xs text-gray">No sales yet</p>';
-    } catch(e) { console.error('Render pulse error', e); }
-}
-
-// ==========================================
-// LOG FORMS
-// ==========================================
-function openLogForm(type) {
-    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
-    if (!m || !c) return;
-    let h = '';
-    if (type === 'sale') {
-        h = '<div class="flex-between mb-3"><h3 class="font-bold">💰 Sold Something</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
-        h += '<label>Product</label><select id="fProduct">' + app.inventory.filter(i => i.status === 'Active').map(i => '<option value="' + i.product + '">' + i.product + ' (' + (i.quantity||1) + ' left)</option>').join('') + '<option value="">Other</option></select>';
-        h += '<input type="text" id="fProductManual" class="mt-1" placeholder="Or type product name">';
-        h += '<label class="mt-2">Customer</label><input type="text" id="fCustomer">';
-        h += '<div class="grid-2 mt-2"><div><label>Buy Price</label><input type="number" id="fBuy"></div><div><label>Sell Price</label><input type="number" id="fSell"></div></div>';
-        h += '<label class="mt-2">Payment</label><select id="fStatus"><option>Paid</option><option>Pending</option></select>';
-        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'sale\')">Save Sale</button>';
-    } else if (type === 'stock') {
-        h = '<div class="flex-between mb-3"><h3 class="font-bold">📦 Bought Stock</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
-        h += '<label>Product *</label><input type="text" id="fProduct">';
-        h += '<div class="grid-3 mt-2"><div><label>Qty</label><input type="number" id="fQty" value="1"></div><div><label>Cost</label><input type="number" id="fCost"></div><div><label>Sell</label><input type="number" id="fSell"></div></div>';
-        h += '<label class="mt-2">Supplier</label><input type="text" id="fSupplier">';
-        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'stock\')">Save Stock</button>';
-    } else if (type === 'expense') {
-        h = '<div class="flex-between mb-3"><h3 class="font-bold">💸 Spent Money</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
-        h += '<label>Description</label><input type="text" id="fDesc">';
-        h += '<label class="mt-2">Amount</label><input type="number" id="fAmount">';
-        h += '<label class="mt-2">Category</label><select id="fCat"><option>Transport</option><option>Data</option><option>Food</option><option>Rent</option><option>Marketing</option><option>Supplies</option><option>Other</option></select>';
-        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'expense\')">Save Expense</button>';
-    } else if (type === 'income') {
-        h = '<div class="flex-between mb-3"><h3 class="font-bold">📥 Received Money</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
-        h += '<label>Source</label><input type="text" id="fSource">';
-        h += '<label class="mt-2">Amount</label><input type="number" id="fAmount">';
-        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'income\')">Save Income</button>';
-    } else if (type === 'debt') {
-        h = '<div class="flex-between mb-3"><h3 class="font-bold">📋 Customer Paid Debt</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div>';
-        h += '<label>Customer</label><select id="fDebtCustomer">' + app.receivablesList.filter(r => r.status !== 'Paid').map(r => '<option value="' + r.id + '">' + r.customer + ' (Owes ' + fm(r.remainingAmount) + ')</option>').join('') + '</select>';
-        if (app.receivablesList.filter(r => r.status !== 'Paid').length === 0) h += '<p class="text-xs text-gray mb-2">No outstanding debts.</p>';
-        h += '<label class="mt-2">Amount Received</label><input type="number" id="fAmount">';
-        h += '<button class="btn btn-primary mt-3" onclick="saveLog(\'debt\')">Save Payment</button>';
-    }
-    c.innerHTML = h; m.style.display = 'flex';
-}
-function closeModal() { const m = document.getElementById('genericModal'); if (m) m.style.display = 'none'; }
-function saveLog(type) {
-    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
-    const gn = (id) => { const el = document.getElementById(id); return el ? Number(el.value) : 0; };
-    if (type === 'sale') {
-        const prod = g('fProduct') || g('fProductManual'); if (!prod) { StorageEngine.showToast('Product required'); return; }
-        const status = g('fStatus');
-        const obj = {id:gid(), customer:g('fCustomer'), product:prod, buyPrice:gn('fBuy'), sellPrice:gn('fSell'), profit:gn('fSell')-gn('fBuy'), status: status === 'Paid' ? 'Closed' : 'Pending', paymentStatus: status, date: new Date().toISOString().slice(0,10)};
-        app.deals.unshift(obj);
-        FinancialEngine.processEvent({type: status === 'Paid' ? 'SALE_PAID' : 'SALE_PENDING', sellPrice: obj.sellPrice, buyPrice: obj.buyPrice});
-        if (status !== 'Paid') {
-            app.receivablesList.push({id:gid(), dealId:obj.id, customer:obj.customer, totalAmount:obj.sellPrice, paidAmount:0, remainingAmount:obj.sellPrice, status:'Pending'});
-        }
-        const inv = app.inventory.find(i => i.product === prod && i.status === 'Active');
-        if (inv) { inv.quantity = (inv.quantity||1) - 1; if (inv.quantity <= 0) inv.status = 'Sold'; }
-    } else if (type === 'stock') {
-        const prod = g('fProduct'); if (!prod) { StorageEngine.showToast('Product required'); return; }
-        const qty = gn('fQty') || 1; const cost = gn('fCost');
-        app.inventory.unshift({id:gid(), product:prod, quantity:qty, cost:cost, sellPrice:gn('fSell'), supplier:g('fSupplier'), status:'Active', purchaseDate: new Date().toISOString().slice(0,10)});
-        FinancialEngine.processEvent({type:'STOCK_PURCHASE', cost, quantity:qty});
-    } else if (type === 'expense') {
-        const amt = gn('fAmount'); if (!amt) { StorageEngine.showToast('Amount required'); return; }
-        app.expenses.unshift({id:gid(), description:g('fDesc'), amount:amt, category:g('fCat').toLowerCase(), date: new Date().toISOString().slice(0,10)});
-        FinancialEngine.processEvent({type:'EXPENSE', amount:amt});
-    } else if (type === 'income') {
-        const amt = gn('fAmount'); if (!amt) { StorageEngine.showToast('Amount required'); return; }
-        app.income.unshift({id:gid(), source:g('fSource'), amount:amt, date: new Date().toISOString().slice(0,10)});
-        FinancialEngine.processEvent({type:'INCOME', amount:amt});
-    } else if (type === 'debt') {
-        const rid = g('fDebtCustomer'); const amt = gn('fAmount');
-        if (!rid || !amt) { StorageEngine.showToast('Select customer and enter amount'); return; }
-        const r = app.receivablesList.find(x => x.id === rid);
-        if (r) { r.paidAmount = (r.paidAmount||0) + amt; r.remainingAmount = r.totalAmount - r.paidAmount; r.status = r.remainingAmount <= 0 ? 'Paid' : 'Partial'; }
-        FinancialEngine.processEvent({type:'DEBT_PAYMENT', amount:amt});
-    }
-    saveApp(); closeModal(); renderPulse();
-    try { StorageEngine.showToast('✅ Saved'); } catch(e) {}
-}
-
-// ==========================================
-// DECISION FORM
-// ==========================================
-function openDecisionForm() {
-    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
-    if (!m || !c) return;
-    c.innerHTML = '<div class="flex-between mb-3"><h3 class="font-bold">🎯 Log a Decision</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div><label>What are you buying?</label><input type="text" id="dTitle"><label class="mt-2">Why?</label><select id="dReason"><option>High demand</option><option>Customer request</option><option>Low price</option><option>Emotional</option><option>Restocking</option></select><div class="grid-2 mt-2"><div><label>Cost</label><input type="number" id="dCost"></div><div><label>Expected Profit</label><input type="number" id="dProfit"></div></div><label class="mt-2">Decision</label><div class="chip-row" id="dFinal"><span class="chip active" onclick="setD(\'BUY\')">🟢 BUY</span><span class="chip" onclick="setD(\'WAIT\')">🟡 WAIT</span><span class="chip" onclick="setD(\'REJECT\')">🔴 REJECT</span></div><button class="btn btn-primary mt-3" onclick="saveDecision()">Save</button>';
-    m.style.display = 'flex';
-}
-function setD(v) { document.querySelectorAll('#dFinal .chip').forEach(c => c.classList.remove('active')); const b = document.querySelector('#dFinal .chip[onclick="setD(\''+v+'\')"]'); if(b) b.classList.add('active'); }
-function saveDecision() {
-    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
-    const fe = document.querySelector('#dFinal .chip.active'); const fd = fe ? fe.textContent.replace(/[🟢🟡🔴]/g,'').trim() : 'WAIT';
-    app.decisions.unshift({id:gid(), title:g('dTitle'), reason:g('dReason'), capitalRequired:Number(document.getElementById('dCost')?.value)||0, expectedProfit:Number(document.getElementById('dProfit')?.value)||0, finalDecision:fd, status:'pending', date: new Date().toISOString().slice(0,10)});
-    saveApp(); closeModal(); StorageEngine.showToast('✅ Decision logged');
-}
-
-// ==========================================
-// RECORDS
-// ==========================================
-let recordsTab = 'inventory';
-function switchRecordsTab(tab) {
-    recordsTab = tab;
-    document.querySelectorAll('#recordsTabs .chip').forEach(c => c.classList.remove('active'));
-    const ac = document.querySelector('#recordsTabs .chip[onclick="switchRecordsTab(\''+tab+'\')"]'); if(ac) ac.classList.add('active');
-    let items = [];
-    if (tab === 'inventory') items = app.inventory.map(i => ({t:i.product+' (Qty:'+(i.quantity||1)+')', m:'Cost:'+fm(i.cost)+' · Sell:'+fm(i.sellPrice)+' · '+i.status, b:i.status==='Active'?'badge-blue':'badge-green'}));
-    else if (tab === 'deals') items = app.deals.map(d => ({t:(d.customer||'Sale')+' — '+d.product, m:fm(d.sellPrice)+' · '+d.status, b:d.status==='Closed'?'badge-green':'badge-blue'}));
-    else if (tab === 'expenses') items = app.expenses.map(e => ({t:e.description+' -'+fm(e.amount), m:e.category, b:'badge-red'}));
-    else if (tab === 'income') items = app.income.map(i => ({t:i.source+' +'+fm(i.amount), m:i.date, b:'badge-green'}));
-    else if (tab === 'debts') items = app.receivablesList.map(r => ({t:r.customer+' — Owes '+fm(r.remainingAmount), m:'Paid:'+fm(r.paidAmount)+' / '+fm(r.totalAmount), b:r.status==='Paid'?'badge-green':'badge-amber'}));
-    try { document.getElementById('recordsList').innerHTML = items.length ? items.map(i => '<div class="row-item"><div class="flex-between"><span class="rt">'+i.t+'</span><span class="badge '+i.b+'">'+i.m.split('·')[0].trim()+'</span></div><div class="rm">'+i.m+'</div></div>').join('') : '<p class="text-xs text-gray text-center">No records</p>'; } catch(e) {}
-}
-
-// ==========================================
-// YOU
-// ==========================================
-function renderYou() {
-    try {
-        const n = document.getElementById('backupNote');
-        if (!app.meta.lastBackup) n.textContent = '⚠ No backup yet.';
-        else { const d = Math.floor((Date.now() - new Date(app.meta.lastBackup).getTime()) / 86400000); n.textContent = d > 7 ? '⚠ Last backup: ' + d + ' days ago' : '✅ Backed up ' + d + ' days ago'; }
-    } catch(e) {}
-}
-function openReviewForm() {
-    const m = document.getElementById('genericModal'); const c = document.getElementById('modalContent');
-    if (!m || !c) return;
-    c.innerHTML = '<div class="flex-between mb-3"><h3 class="font-bold">Weekly Review</h3><button onclick="closeModal()" style="background:none;border:none;color:var(--text2);font-size:1.5rem;">×</button></div><label>✅ What Worked</label><textarea id="rWorked" rows="2"></textarea><label class="mt-2">❌ What Failed</label><textarea id="rFailed" rows="2"></textarea><label class="mt-2">💰 What Leaked</label><textarea id="rLeaked" rows="2"></textarea><label class="mt-2">🔧 What to Improve</label><textarea id="rImprove" rows="2"></textarea><button class="btn btn-primary mt-3" onclick="saveReview()">Save Review</button>';
-    m.style.display = 'flex';
-}
-function saveReview() {
-    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
-    app.reviews.unshift({id:gid(), date: new Date().toISOString().slice(0,10), whatWorked:g('rWorked'), whatFailed:g('rFailed'), whatLeaked:g('rLeaked'), whatImprove:g('rImprove')});
-    saveApp(); closeModal(); StorageEngine.showToast('✅ Review saved');
-}
-
-// ==========================================
-// IMPORT / EXPORT
-// ==========================================
-function exportData() { StorageEngine.exportData(); renderYou(); StorageEngine.showToast('📥 Exported'); }
-function importData(e) {
-    const file = e.target.files[0]; if (!file) return;
-    StorageEngine.importData(file, function(data) {
-        if (confirm('Replace all current data with this backup?')) {
-            app = data;
-            if (!app.income) app.income = [];
-            if (!app.receivablesList) app.receivablesList = [];
-            if (!app.decisions) app.decisions = [];
-            saveApp(); renderPulse(); switchRecordsTab(recordsTab); renderYou();
-            StorageEngine.showToast('📤 Imported');
-        }
+    navbarToggle.addEventListener('click', () => {
+        navbarMenu.classList.toggle('active');
     });
-    e.target.value = '';
-}
-function resetAll() {
-    if (confirm('Delete ALL data? This cannot be undone.')) {
-        app = getDefaultApp(); saveApp(); renderPulse(); switchRecordsTab('inventory'); renderYou();
-        StorageEngine.showToast('🗑 Reset');
-    }
-}
 
-// ==========================================
-// STREAK TRACKING
-// ==========================================
-function updateStreak() {
-    const today = new Date().toISOString().slice(0,10);
-    if (app.meta.lastActive === today) return;
-    if (app.meta.lastActive) {
-        const last = new Date(app.meta.lastActive); const now = new Date(today);
-        const diff = Math.floor((now - last) / 86400000);
-        app.meta.streak = diff === 1 ? (app.meta.streak||0) + 1 : 1;
-    } else { app.meta.streak = 1; }
-    app.meta.lastActive = today;
-    saveApp();
-    try { document.getElementById('streakBadge').textContent = '🔥 ' + (app.meta.streak||0) + ' days'; } catch(e) {}
-}
-updateStreak();
+    navbarMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navbarMenu.classList.remove('active');
+        });
+    });
 
-// ==========================================
-// INIT
-// ==========================================
-function renderAll() { renderPulse(); switchRecordsTab('inventory'); renderYou(); }
-renderAll(); showPage('pulse');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
 </script>
 </body>
 </html>
